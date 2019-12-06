@@ -25,3 +25,5 @@ class PlayerInfo(object):
             self.player_info = res["player1"]
         else:
             self.player_info = res["player2"]
+        self.x = self.player_info['x']
+        self.y = self.player_info['y']
