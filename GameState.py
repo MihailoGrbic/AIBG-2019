@@ -1,3 +1,3 @@
 class GameState(object):
     def __init__(self, res):
-        self.current_turn = 0
+        self.turns_left = res['turn']

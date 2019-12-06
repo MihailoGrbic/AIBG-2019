@@ -2,6 +2,7 @@ from Client import *
 from GameState import GameState
 from Map import Map
 from PlayerInfo import PlayerInfo
+import pprint
 
 actions = {
 
@@ -98,6 +99,14 @@ class Bot(object):
         self.other_info = None
 
     def update_data(self, res):
+        if res['success'] == False:
+            print("pusi kurac majmune")
+
+        res = res['result']
+        with open('tmp.txt', 'w') as f:
+            f.write(pprint.pformat(res['map']))
+            f.close()
+
         self.current_game_state = GameState(res)
         self.current_map = Map(res)
         self.self_info = PlayerInfo(res, me=True)
