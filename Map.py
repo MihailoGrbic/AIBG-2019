@@ -13,5 +13,3 @@ class Map(object):
             for j in range(self.width):
                 if self.tiles[i][j]['item'] is not None:
                     self.items.append(self.tiles[i][j]['item'])
-
-

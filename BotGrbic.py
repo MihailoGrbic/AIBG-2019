@@ -4,9 +4,6 @@ import random
 
 class BotGrbic(Bot):
 
-    def __init__(self, url, gameId, playerId):
-        super(BotGrbic, self).__init__(url, gameId, playerId)
-
     def play_single_turn(self, current_game_state, current_map, self_info, other_info):
         print(current_map.width)
         print(current_map.height)

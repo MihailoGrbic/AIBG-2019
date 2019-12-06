@@ -89,7 +89,7 @@ actions = {
 
 
 class Bot(object):
-    def __init__(self, url, gameId, playerId):
+    def __init__(self, url, gameId, playerId, random = False):
         self.url = url
         self.gameId = gameId
         self.playerId = playerId
@@ -97,6 +97,11 @@ class Bot(object):
         self.current_map = None
         self.self_info = None
         self.other_info = None
+
+        if random:
+            self.connect_random()
+        else:
+            self.connect()
 
     def update_data(self, res):
         if not res['success']:
@@ -108,6 +113,12 @@ class Bot(object):
         self.current_map = Map(res)
         self.self_info = PlayerInfo(res, player1=True)
         self.other_info = PlayerInfo(res, player1=False)
+
+    def connect_random(self):
+        res = get(self.url + '/train/random?playerId=' + str(self.playerId))
+        self.update_data(res)
+        self.gameId = int(res['result']['id'])
+        print("Random game id: " + str(self.gameId))
 
     def connect(self):
         res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
