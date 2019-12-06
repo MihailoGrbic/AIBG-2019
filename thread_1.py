@@ -3,7 +3,14 @@ import Client
 from BotLeft import BotLeft
 from BotKeyboard import BotKeyboard
 
-Client.get("http://localhost:9080/admin/createGame?gameId=0&playerOne=1&playerTwo=2&mapName=mapConfig")
-bot = BotRandom('http://localhost:9080', 0, 1)
+gameId = 4
+playerOne = 0
+playerTwo = 1
+
+Client.get("http://localhost:9080/admin/createGame?gameId=" + str(gameId) +
+           "&playerOne=" + str(playerOne) +
+           "&playerTwo=" + str(playerTwo) +
+           "&mapName=mapConfig")
+bot = BotRandom('http://localhost:9080', gameId, playerOne)
 
 bot.game()

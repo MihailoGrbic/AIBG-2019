@@ -3,6 +3,7 @@ from GameState import GameState
 from Map import Map
 from PlayerInfo import PlayerInfo
 import pprint
+from InteligenceUtil import *
 
 actions = {
 
@@ -123,6 +124,7 @@ class Bot(object):
     def connect(self):
         res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
         self.update_data(res)
+        print(res)
 
     # treba da se proveri dal radi
     def doAction(self, a):
