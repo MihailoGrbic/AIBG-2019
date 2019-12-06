@@ -120,3 +120,33 @@ def find_path_to(player: PlayerInfo, current_map: Map, x, y):
         if diff[0] == 1:
             path_wasd.append('d')
     return path_wasd
+
+def find_resource_locations(current_map: Map,resource_type):
+
+    coors = []
+
+    for x in Map.items:
+
+        if resource_type=='wood':
+            if x['itemType'=='WOOD_SHOP']:
+                coors.append((x['x'],x['y']))
+        elif resource_type=='stone':
+            if x['itemType'=='STONE_SHOP']:
+                coors.append((x['x'],x['y']))
+        else:
+            if x['itemType'=='METAL_SHOP']:
+                coors.append((x['x'],x['y']))
+    return coors
+
+
+def find_path_to_nearest(current_map: Map,player: PlayerInfo, resource_type):
+    min_len = 10000000
+    pathoske = None
+    loc_vec = find_resource_locations(current_map,resource_type)
+    for loc in loc_vec:
+        curr_pathoske = find_path_to(player, current_map, loc[0], loc[1])
+        if len(curr_pathoske)<min_len:
+            min_len = len(curr_pathoske)
+            pathoske = curr_pathoske
+
+    return pathoske
