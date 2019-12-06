@@ -5,12 +5,40 @@ import Map
 import PlayerInfo
 
 class Action(enum.Enum):
+
+    # moving
+
     DOWN = "s"
     UP = "w"
     LEFT = "a"
     RIGHT = "d"
-    # treba da se dodaju ostale akcije
 
+    # taking resources
+
+    TAKE_DOWN = "trs"
+    TAKE_UP = "trw"
+    TAKE_LEFT = "tra"
+    TAKE_RIGHT = "trd"
+
+    # leave resource
+
+    LEAVE_WOOD = "lw"
+    LEAVE_STONE = "lw"
+    LEAVE_METAL = "lw"
+
+    # sword attack
+
+    SWORD_DOWN = "sas"
+    SWORD_UP = "saw"
+    SWORD_LEFT = "saa"
+    SWORD_RIGHT = "sad"
+
+    # arrow attack
+
+    ARROW_DOWN = "aas"
+    ARROW_UP = "aaw"
+    ARROW_LEFT = "aaa"
+    ARROW_RIGHT = "aad"
 
 class Bot(object):
     def __init__(self, url, gameId, playerId):
