@@ -1,12 +1,29 @@
+# Example dict:
+# {'buildings': [],
+#  'health': 100,
+#  'id': 1,
+#  'initX': 0,
+#  'initY': 0,
+#  'kills': 0,
+#  'lives': 5,
+#  'notFinishedBuildings': [],
+#  'resources': {'METAL': 0, 'STONE': 0, 'WOOD': 0},
+#  'score': 0,
+#  'stringType': 'Player',
+#  'stupidMoves': 7,
+#  'weapon1': None,
+#  'weapon2': None,
+#  'x': 3,
+#  'y': 2}
+
+
 class PlayerInfo(object):
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-
-        self.lives = 5
-        self.health = 100
-
-    def dec_health(self, val):
-        self.health -= val
-
-    # ...
+    def __init__(self, res, player1):
+        # TODO (djokjulapfe): nisam siguran kako ovo player1/2 radi
+        self.is_me = player1
+        if player1:
+            self.player_info = res["player1"]
+        else:
+            self.player_info = res["player2"]
+        self.x = self.player_info['x']
+        self.y = self.player_info['y']

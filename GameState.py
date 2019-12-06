@@ -1,8 +1,4 @@
 class GameState(object):
-    def __init__(self):
-        self.current_turn = 0
-
-    def inc_turn(self):
-        self.current_turn += 1
-
-    # ...
+    def __init__(self, res):
+        self.game_state = res
+        self.turns_left = res['turn']
