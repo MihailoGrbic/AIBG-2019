@@ -3,6 +3,7 @@ from GameState import GameState
 from Map import Map
 from PlayerInfo import PlayerInfo
 import pprint
+from InteligenceUtil import *
 
 actions = {
 
@@ -89,7 +90,7 @@ actions = {
 
 
 class Bot(object):
-    def __init__(self, url, gameId, playerId, random = False):
+    def __init__(self, url, gameId, playerId, random=False):
         self.url = url
         self.gameId = gameId
         self.playerId = playerId
@@ -111,8 +112,8 @@ class Bot(object):
 
         self.current_game_state = GameState(res)
         self.current_map = Map(res)
-        self.self_info = PlayerInfo(res, player1=True)
-        self.other_info = PlayerInfo(res, player1=False)
+        self.self_info = PlayerInfo(res, player1=res['player1']['id'] == self.playerId)
+        self.other_info = PlayerInfo(res, player1=res['player1']['id'] != self.playerId)
 
     def connect_random(self):
         res = get(self.url + '/train/random?playerId=' + str(self.playerId))
@@ -123,6 +124,7 @@ class Bot(object):
     def connect(self):
         res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
         self.update_data(res)
+        print(res)
 
     # treba da se proveri dal radi
     def doAction(self, a):
