@@ -69,12 +69,12 @@ actions = {
     "SWORD_FORT_LEFT": "bsfa",
     "SWORD_FORT_RIGHT": "bsfd",
 
-    # sword fort
+    # arrow fort
 
-    "SWORD_FORT_DOWN": "bafs",
-    "SWORD_FORT_UP": "bafw",
-    "SWORD_FORT_LEFT": "bafa",
-    "SWORD_FORT_RIGHT": "bafd",
+    "ARROW_FORT_DOWN": "bafs",
+    "ARROW_FORT_UP": "bafw",
+    "ARROW_FORT_LEFT": "bafa",
+    "ARROW_FORT_RIGHT": "bafd",
 
     # drop shield
 
@@ -90,7 +90,7 @@ actions = {
 
 
 class Bot(object):
-    def __init__(self, url, gameId, playerId, random = False):
+    def __init__(self, url, gameId, playerId, random=False):
         self.url = url
         self.gameId = gameId
         self.playerId = playerId
@@ -112,8 +112,8 @@ class Bot(object):
 
         self.current_game_state = GameState(res)
         self.current_map = Map(res)
-        self.self_info = PlayerInfo(res, player1=True)
-        self.other_info = PlayerInfo(res, player1=False)
+        self.self_info = PlayerInfo(res, player1=res['player1']['id'] == self.playerId)
+        self.other_info = PlayerInfo(res, player1=res['player1']['id'] != self.playerId)
 
     def connect_random(self):
         res = get(self.url + '/train/random?playerId=' + str(self.playerId))

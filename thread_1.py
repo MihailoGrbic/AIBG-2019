@@ -2,6 +2,7 @@ from BotRandom import BotRandom
 import Client
 from BotLeft import BotLeft
 from BotKeyboard import BotKeyboard
+from BotGrbic import BotGrbic
 
 gameId = 4
 playerOne = 0

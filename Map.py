@@ -6,6 +6,7 @@ class Map(object):
         self.width = res['width']
         self.height = res['height']
         self.tiles = res['tiles']
+
         self.items = []
         self.wood_shops = []
         self.metal_shops = []
