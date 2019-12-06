@@ -1,4 +1,5 @@
-import Bot
+from Bot import Bot
+
 
 class BotDummy(Bot):
 

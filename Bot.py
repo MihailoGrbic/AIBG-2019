@@ -59,6 +59,8 @@ class Bot(object):
     def doAction(self, a):
         res = get('{0}/doAction?playerId={1}&gameId={2}&action={3}'.format(
             self.url, self.playerId, self.gameId, a))
+        print('{0}/doAction?playerId={1}&gameId={2}&action={3}'.format(
+            self.url, self.playerId, self.gameId, a))
 
     def game(self):
         while True:

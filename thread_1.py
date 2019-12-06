@@ -1,5 +1,5 @@
-import BotDummy
+from BotRandom import BotRandom
 
-bot = BotDummy('http://localhost:9080', 1, 1)
+bot = BotRandom('http://localhost:9080', 0, 1)
 
 bot.game()
