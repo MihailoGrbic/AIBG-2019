@@ -68,12 +68,12 @@ actions = {
     "SWORD_FORT_LEFT": "bsfa",
     "SWORD_FORT_RIGHT": "bsfd",
 
-    # sword fort
+    # arrow fort
 
-    "SWORD_FORT_DOWN": "bafs",
-    "SWORD_FORT_UP": "bafw",
-    "SWORD_FORT_LEFT": "bafa",
-    "SWORD_FORT_RIGHT": "bafd",
+    "ARROW_FORT_DOWN": "bafs",
+    "ARROW_FORT_UP": "bafw",
+    "ARROW_FORT_LEFT": "bafa",
+    "ARROW_FORT_RIGHT": "bafd",
 
     # drop shield
 
