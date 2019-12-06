@@ -8,6 +8,7 @@ def get(url):
 player1Actions = []
 player2Actions = []
 
+
 for i in range(0, 200):
     player1Actions.append('d')
     player1Actions.append('d')
@@ -32,14 +33,16 @@ class Bot:
 
     def join(self):
         res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
+        print(res)
 
     def doAction(self, str):
         res = get('{0}/doAction?playerId={1}&gameId={2}&action={3}'.format(
             self.url, self.playerId, self.gameId, str))
+        print(res)
 
-gameId = 1
-playerId = 1
-Bot1 = Bot("http://192.168.0.26:9080", playerId, gameId)
+gameId = 10
+playerId = 2
+Bot1 = Bot("http://localhost:9080", playerId, gameId)
 
 Bot1.join()
 
