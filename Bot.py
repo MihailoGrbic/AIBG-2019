@@ -99,18 +99,15 @@ class Bot(object):
         self.other_info = None
 
     def update_data(self, res):
-        if res['success'] == False:
-            print("pusi kurac majmune")
+        if not res['success']:
+            print("Nesto tu nije u reeeedu!")
 
         res = res['result']
-        with open('tmp.txt', 'w') as f:
-            f.write(pprint.pformat(res['map']))
-            f.close()
 
         self.current_game_state = GameState(res)
         self.current_map = Map(res)
-        self.self_info = PlayerInfo(res, me=True)
-        self.other_info = PlayerInfo(res, me=False)
+        self.self_info = PlayerInfo(res, player1=True)
+        self.other_info = PlayerInfo(res, player1=False)
 
     def connect(self):
         res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
