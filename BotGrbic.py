@@ -24,6 +24,9 @@ def next_position(move, current_map, self_info):
 
     return checkx, checky
 
+        # nx, ny = next_position(path[-1], current_map, self_info)
+        # if current_map.tiles[nx][ny]["item"] is not None and current_map.tiles[nx][ny].item
+
 class BotGrbic(Bot):
 
     def play_single_turn(self, current_game_state, current_map, self_info, other_info):
@@ -34,9 +37,6 @@ class BotGrbic(Bot):
         while len(path) > 1: 
             path = find_path_to_nearest(current_map, self_info, "Wood")
             self.doAction(path[0])
-            
-        # nx, ny = next_position(path[-1], current_map, self_info)
-        # if current_map.tiles[nx][ny]["item"] is not None and current_map.tiles[nx][ny].item
         
         self.doAction("tr" + path[0]), self.doAction("tr" + path[0]), self.doAction("tr" + path[0]), self.doAction("tr" + path[0])
 
@@ -73,7 +73,7 @@ class BotGrbic(Bot):
         while len(path) > 1: 
             path = find_path_to_nearest(current_map, self_info, "Wood")
             self.doAction(path[0])
-        self.doAction("tr" + path[-1])
+        self.doAction("tr" + path[-1]), self.doAction("bsf" + path[-1])
 
         # Build sword fortress
         path = find_path_to(self_info, current_map, house_spot[0], house_spot[1])
@@ -82,6 +82,7 @@ class BotGrbic(Bot):
             self.doAction(path[0])
         self.doAction("bsf" + path[-1])
 
+        # Try to build 
         print(current_map.tiles[self_info.x][self_info.y])
 
         # # Pickup the needed ammount
