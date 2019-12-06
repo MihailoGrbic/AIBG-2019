@@ -1,4 +1,4 @@
-import Bot
+from Bot import Bot
 
 class BotKeyboard(Bot):
 
