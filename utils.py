@@ -94,7 +94,7 @@ def astar(maze: Map, start, end):
             # Create the f, g, and h values
             child.g = current_node.g + 1
             child.h = ((child.position[0] - end_node.position[0]) ** 2) + (
-                        (child.position[1] - end_node.position[1]) ** 2)
+                    (child.position[1] - end_node.position[1]) ** 2)
             child.f = child.g + child.h
 
             # Child is already in the open list
@@ -110,7 +110,7 @@ def find_path_to(player: PlayerInfo, current_map: Map, x, y):
     path = astar(current_map, (player.x, player.y), (x, y))
     path_wasd = []
     for i in range(len(path) - 1):
-        diff = (path[i+1][0] - path[i][0], path[i+1][1] - path[i][1])
+        diff = (path[i + 1][0] - path[i][0], path[i + 1][1] - path[i][1])
         if diff[1] == -1:
             path_wasd.append('w')
         if diff[0] == -1:
@@ -121,31 +121,31 @@ def find_path_to(player: PlayerInfo, current_map: Map, x, y):
             path_wasd.append('d')
     return path_wasd
 
-def find_resource_locations(current_map: Map,resource_type):
 
+def find_resource_locations(current_map: Map, resource_type):
     coors = []
 
     for x in Map.items:
 
-        if resource_type=='wood':
-            if x['itemType'=='WOOD_SHOP']:
-                coors.append((x['x'],x['y']))
-        elif resource_type=='stone':
-            if x['itemType'=='STONE_SHOP']:
-                coors.append((x['x'],x['y']))
+        if resource_type == 'wood':
+            if x['itemType' == 'WOOD_SHOP']:
+                coors.append((x['x'], x['y']))
+        elif resource_type == 'stone':
+            if x['itemType' == 'STONE_SHOP']:
+                coors.append((x['x'], x['y']))
         else:
-            if x['itemType'=='METAL_SHOP']:
-                coors.append((x['x'],x['y']))
+            if x['itemType' == 'METAL_SHOP']:
+                coors.append((x['x'], x['y']))
     return coors
 
 
-def find_path_to_nearest(current_map: Map,player: PlayerInfo, resource_type):
+def find_path_to_nearest(current_map: Map, player: PlayerInfo, resource_type):
     min_len = 10000000
     pathoske = None
-    loc_vec = find_resource_locations(current_map,resource_type)
+    loc_vec = find_resource_locations(current_map, resource_type)
     for loc in loc_vec:
         curr_pathoske = find_path_to(player, current_map, loc[0], loc[1])
-        if len(curr_pathoske)<min_len:
+        if len(curr_pathoske) < min_len:
             min_len = len(curr_pathoske)
             pathoske = curr_pathoske
 
