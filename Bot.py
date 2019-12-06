@@ -37,7 +37,53 @@ actions = {
     "ARROW_DOWN": "aas",
     "ARROW_UP": "aaw",
     "ARROW_LEFT": "aaa",
-    "ARROW_RIGHT": "aad"
+    "ARROW_RIGHT": "aad",
+
+    # house
+
+    "HOUSE_DOWN": "bhs",
+    "HOUSE_UP": "bhw",
+    "HOUSE_LEFT": "bha",
+    "HOUSE_RIGHT": "bhd",
+
+    # fort
+
+    "FORT_DOWN": "bfs",
+    "FORT_UP": "bfw",
+    "FORT_LEFT": "bfa",
+    "FORT_RIGHT": "bfd",
+
+    # shield fort
+
+    "SHIELD_FORT_DOWN": "bshfs",
+    "SHIELD_FORT_UP": "bshfw",
+    "SHIELD_FORT_LEFT": "bshfa",
+    "SHIELD_FORT_RIGHT": "bshfd",
+
+    # sword fort
+
+    "SWORD_FORT_DOWN": "bsfs",
+    "SWORD_FORT_UP": "bsfw",
+    "SWORD_FORT_LEFT": "bsfa",
+    "SWORD_FORT_RIGHT": "bsfd",
+
+    # sword fort
+
+    "SWORD_FORT_DOWN": "bafs",
+    "SWORD_FORT_UP": "bafw",
+    "SWORD_FORT_LEFT": "bafa",
+    "SWORD_FORT_RIGHT": "bafd",
+
+    # drop shield
+
+    "DROP_SHIELD": "dsh",
+
+    # pick up your weapons and fight
+
+    "TAKE_WEAPON_DOWN": "tws",
+    "TAKE_WEAPON_UP": "tww",
+    "TAKE_WEAPON_LEFT": "twa",
+    "TAKE_WEAPON_RIGHT": "twd"
 }
 
 
