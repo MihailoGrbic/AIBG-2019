@@ -59,19 +59,19 @@ class BotGrbic(Bot):
         if self.state == 3:
             print(self.wood_pos)
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
-            if self_info.player_info["resources"]["WOOD"] < 4: self.doAction("tr" + path[0])
+            if self_info.player_info["resources"]["WOOD"] < 4: return "tr" + path[0]
             else: self.state += 1
                 
         # Goto stone
         if self.state == 4:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
-            if len(path) > 1: self.doAction(path[0])
+            if len(path) > 1: return path[0]
             else: self.state += 1  
 
         # Take stone
         if self.state == 5:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
-            if self_info.player_info["resources"]["STONE"] < 1: self.doAction("tr" + path[0])
+            if self_info.player_info["resources"]["STONE"] < 1: return "tr" + path[0]
             else: self.state += 1
 
         # Goto house
@@ -92,70 +92,69 @@ class BotGrbic(Bot):
         # Build house
         if self.state == 7:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-
-            self.doAction("bh" + path[0])
+            return "bh" + path[0]
             self.state += 1
             return
 
         # Goto stone 2
         if self.state == 8:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
-            if len(path) > 1: self.doAction(path[0])
+            if len(path) > 1: return path[0]
             else: self.state += 1
 
         # Take stone 2
         if self.state == 9:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
-            if self_info.player_info["resources"]["STONE"] < 3: self.doAction("tr" + path[0])
+            if self_info.player_info["resources"]["STONE"] < 3: return "tr" + path[0]
             else: self.state += 1
 
         # Goto house
         if self.state == 10:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            if len(path) > 1: self.doAction(path[0])
+            if len(path) > 1: return path[0]
             else: self.state += 1
 
         # Build fort
         if self.state == 11:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.doAction("bf" + path[0])
+            return "bf" + path[0]
             self.state += 1
             return
 
         # Goto wood 2
         if self.state == 12:
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
-            if len(path) > 1: self.doAction(path[0])
+            if len(path) > 1: return path[0]
             else: self.state += 1
                 
         # Take wood 2
         if self.state == 13:
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
-            if self_info.player_info["resources"]["WOOD"] < 1: self.doAction("tr" + path[0])
+            if self_info.player_info["resources"]["WOOD"] < 1: return "tr" + path[0]
             else: self.state += 1
 
         # Goto metal
         if self.state == 14:
             path = find_path_to(self_info, current_map, self.metal_pos[0], self.metal_pos[1])
-            if len(path) > 1: self.doAction(path[0])
+            if len(path) > 1: return path[0]
             else: self.state += 1
 
         # Take metal
         if self.state == 15:
             path = find_path_to(self_info, current_map, self.metal_pos[0], self.metal_pos[1])
-            if self_info.player_info["resources"]["METAL"] < 3: self.doAction("tr" + path[0])
+            if self_info.player_info["resources"]["METAL"] < 3: return "tr" + path[0]
             else: self.state += 1
 
         # Goto fort
         if self.state == 16:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            if len(path) > 1: self.doAction(path[0])
+            if len(path) > 1: return path[0]
             else: self.state += 1
 
         # Upgrade fort
-        if self.state == 18:
+        if self.state == 17:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.doAction("bsf" + path[0])
+            return "bsf" + path[0]
             self.state += 1
             self.sword_fort_position = self.min_settle_pos
 
@@ -168,14 +167,14 @@ class BotGrbic(Bot):
 
         # Wait untill sword fort is built
         if self.state == 50:
-            if current_map.tiles[self.sword_fort_position[1]][self.sword_fort_position[0]]['item'] is None: self.doAction("")
+            if current_map.tiles[self.sword_fort_position[1]][self.sword_fort_position[0]]['item'] is None: return ""
             else: self.state += 1
 
         # Take 2 swords
         if self.state == 51:
             path = find_path_to(self_info, current_map, self.sword_fort_position[0], self.sword_fort_position[1])
             if self_info.player_info["weapon1"] is None or self_info.player_info["weapon2"] is None:
-                self.doAction("tw" + path[0])
+                return "tw" + path[0]
             else:
                 self.state += 1
 
@@ -221,6 +220,6 @@ class BotGrbic(Bot):
                 self.play_single_turn(current_game_state)
 
         if self.state == 90:
-            self.doAction("")
+            return ""
         # Try to build 
         # print(current_map.tiles[self_info.x][self_info.y])

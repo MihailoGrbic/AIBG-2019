@@ -157,10 +157,10 @@ def find_nearest(pos: tuple, items: list):
     min_dist = -1
     min_dist_pos = None
     for item in items:
-        curr_dist = dist(*pos, *item)
+        curr_dist = dist(pos[0], pos[1], item['x'], item['y'])
         if min_dist_pos is None or curr_dist < min_dist:
             min_dist = curr_dist
-            min_dist_pos = item
+            min_dist_pos = (item['x'], item['y'])
 
     return min_dist_pos
 
@@ -175,48 +175,48 @@ def nearest_to_map(mapSize: tuple, items: list):
     queue = []
 
     for item in items:
-        i,j = item
+        i, j = item
         nearest_dist[i][j] = 0
         nearest_pos[i][j] = item
-        if i > 0 and nearest_dist[i-1][j] == -1:
-            nearest_dist[i-1][j] = 1
-            nearest_pos[i-1][j] = (i,j)
-            queue += [(i-1,j)]
-        if j > 0 and nearest_dist[i][j-1] == -1:
-            nearest_dist[i][j-1] = 1
-            nearest_pos[i][j-1] = (i,j)
-            queue += [(i,j-1)]
-        if i < mapSize[0]-1 and nearest_dist[i+1][j] == -1:
-            nearest_dist[i+1][j] = 1
-            nearest_pos[i+1][j] = (i,j)
-            queue += [(i+1,j)]
-        if j < mapSize[1] - 1 and nearest_dist[i][j+1] == -1:
-            nearest_dist[i][j+1] = 1
-            nearest_pos[i][j+1] = (i,j)
-            queue += [(i,j+1)]
+        if i > 0 and nearest_dist[i - 1][j] == -1:
+            nearest_dist[i - 1][j] = 1
+            nearest_pos[i - 1][j] = (i, j)
+            queue += [(i - 1, j)]
+        if j > 0 and nearest_dist[i][j - 1] == -1:
+            nearest_dist[i][j - 1] = 1
+            nearest_pos[i][j - 1] = (i, j)
+            queue += [(i, j - 1)]
+        if i < mapSize[0] - 1 and nearest_dist[i + 1][j] == -1:
+            nearest_dist[i + 1][j] = 1
+            nearest_pos[i + 1][j] = (i, j)
+            queue += [(i + 1, j)]
+        if j < mapSize[1] - 1 and nearest_dist[i][j + 1] == -1:
+            nearest_dist[i][j + 1] = 1
+            nearest_pos[i][j + 1] = (i, j)
+            queue += [(i, j + 1)]
 
     curr_ind = 0
     while curr_ind != len(queue):
-        i,j = queue[curr_ind]
+        i, j = queue[curr_ind]
         curr_ind += 1
 
         val = nearest_dist[i][j]
 
         if i > 0 and nearest_dist[i - 1][j] == -1:
-            nearest_dist[i - 1][j] = val+1
-            nearest_pos[i-1][j] = nearest_pos[i][j]
+            nearest_dist[i - 1][j] = val + 1
+            nearest_pos[i - 1][j] = nearest_pos[i][j]
             queue += [(i - 1, j)]
         if j > 0 and nearest_dist[i][j - 1] == -1:
-            nearest_dist[i][j - 1] = val+1
-            nearest_pos[i][j-1] = nearest_pos[i][j]
+            nearest_dist[i][j - 1] = val + 1
+            nearest_pos[i][j - 1] = nearest_pos[i][j]
             queue += [(i, j - 1)]
         if i < mapSize[0] - 1 and nearest_dist[i + 1][j] == -1:
-            nearest_dist[i + 1][j] = val+1
-            nearest_pos[i+1][j] = nearest_pos[i][j]
+            nearest_dist[i + 1][j] = val + 1
+            nearest_pos[i + 1][j] = nearest_pos[i][j]
             queue += [(i + 1, j)]
         if j < mapSize[1] - 1 and nearest_dist[i][j + 1] == -1:
-            nearest_dist[i][j + 1] = val+1
-            nearest_pos[i][j+1] = nearest_pos[i][j]
+            nearest_dist[i][j + 1] = val + 1
+            nearest_pos[i][j + 1] = nearest_pos[i][j]
             queue += [(i, j + 1)]
 
     return nearest_pos

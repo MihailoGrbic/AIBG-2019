@@ -90,55 +90,6 @@ actions = {
 
 
 class Bot(object):
-    def __init__(self, url, gameId, playerId, random=False):
-        self.url = url
-        self.gameId = gameId
 
-        self.playerId = playerId
-        self.policy_list = None
-        self.current_game_state = None
-
-    def get_policy_list(self):
-        return self.policy_list
-
-    def get_child_bot(self, current_game_state):
-        for policy in self.policy_list:
-            if policy.should_execute(current_game_state):
-                return policy.bot
-
-    def update_data(self, res):
-        if not res['success']:
-            print("Nesto tu nije u reeeedu!")
-
-        res = res['result']
-
-        self.current_game_state = GameState(res, self.gameId, self.playerId)
-
-    def connect_random(self):
-        res = get(self.url + '/train/random?playerId=' + str(self.playerId))
-        self.update_data(res)
-        self.gameId = int(res['result']['id'])
-        print("Random game id: " + str(self.gameId))
-
-    def connect(self):
-        res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
-        self.update_data(res)
-        print(res)
-
-    # treba da se proveri dal radi
-    def doAction(self, a):
-        res = get('{0}/doAction?playerId={1}&gameId={2}&action={3}'.format(
-            self.url, self.playerId, self.gameId, a))
-        print('{0}/doAction?playerId={1}&gameId={2}&action={3}'.format(
-            self.url, self.playerId, self.gameId, a))
-        self.update_data(res)
-
-    def game(self):
-        while True:
-            self.play_single_turn(self.current_game_state)
-
-    # ovo se override-uje za taktiku
-    # GameState current_game_state
-    def play_single_turn(self, current_game_state):
-        while True:
-            self.doAction(actions["DOWN"])
+    def play_single_turn(self, current_game_state : GameState):
+        pass

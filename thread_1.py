@@ -1,11 +1,17 @@
+from GamePlaySingleBot import GamePlaySingleBot
 from BotRandom import BotRandom
-import Client
-from BotLeft import BotLeft
-from BotKeyboard import BotKeyboard
-from BotGrbic import BotGrbic
+from Client import get
 
+gameId = 2
+playerOne = 0
+playerTwo = 1
 
-bot = BotRandom('http://localhost:9080', 0, 1)
+get("http://localhost:9080/admin/createGame?gameId=" + str(gameId) +
+           "&playerOne=" + str(playerOne) +
+           "&playerTwo=" + str(playerTwo)  +
+           "&mapName=mapConfig")
 
-bot.connect()
-bot.game()
+gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerOne, BotRandom())
+
+gamePlay.play()
+
