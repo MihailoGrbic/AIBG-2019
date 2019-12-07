@@ -1,11 +1,10 @@
 from Bot import Bot
+from Policy import Policy
+from BotWalker import BotWalker
 
 
 class BotGetWeapon(Bot):
-    x : list = [(ea, Bot), ..]
 
-    def play_single_turn(self, current_game_state, current_map, self_info, other_info):
-        for i in x:
-            if i[0](...):
-                not i[1].play_sin
-                break;
+    def play_single_turn(self, current_game_state):
+        bot = BotWalker(self.url, self.gameId, self.playerId, 10, 10)
+        bot.play_single_turn(current_game_state)
