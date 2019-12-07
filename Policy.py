@@ -1,5 +1,5 @@
 from Bot import Bot
-from BotRunnaway import Bot Runnaway
+#from BotRunnaway import BotRunnaway
 import GameState
 import utils
 from GameState import GameState
