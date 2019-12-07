@@ -12,8 +12,9 @@ class BotGetWeapon(Bot):
 
     def play_single_turn(self, current_game_state: GameState):
         md = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y),
-                                [b for b in current_game_state.map.items if
-                                 b["itemType"] == "SWORD_FORTRESS" and b["id"] == current_game_state.playerId])
+                                [b for b in current_game_state.self_info.player_info["buildings"] if
+                                 b["itemType"] == "SWORD_FORTRESS"])
+
         if utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1:
             if md[0] == current_game_state.self_info.x + 1:
                 return actions["TAKE_WEAPON_RIGHT"]
