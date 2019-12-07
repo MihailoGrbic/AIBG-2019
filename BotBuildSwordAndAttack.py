@@ -21,7 +21,7 @@ class BotBuildSwordAndAttack(Bot):
             Policy.GetSword(BotGetWeapon()),
             # Policy.BuildSwordFortress(self.x),
             BotBuilder.StarterPolicy(),
-            Policy.PolicyAlwaysAllow(BotRandom())
+            Policy.PolicyAlwaysAllow(BotBuilder.BotBuilder())
         ]
 
     def play_single_turn(self, current_game_state: GameState):
