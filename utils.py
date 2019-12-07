@@ -74,7 +74,7 @@ def astar(maze: Map, start, end):
             node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
 
             # Make sure walkable terrain
-            if not move_available(maze, node_position[0], node_position[1]):
+            if not move_available(maze, node_position[0], node_position[1]) and node_position != end:
                 continue
 
             # Create new node
