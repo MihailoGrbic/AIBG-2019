@@ -1,5 +1,5 @@
 from Bot import Bot
-# from BotRunnaway import BotRunnaway
+from BotRunnaway import BotRunnaway
 import GameState
 import utils
 from GameState import GameState
@@ -132,17 +132,15 @@ class GatherResource(Policy):
         return ret_val
 
 
-HP_RUN = 40
-DIST_RUN = 4
-
-
 class PolicyPussy(Policy):
 
-    def __init__(self, bot: Bot):
-        super().__init__(BotRunnaway)
+    def __init__(self, bot: Bot,hp_run,dist_run):
+        super().__init__(BotRunnaway())
+        self.hp_run = hp_run
+        self.dist_run = dist_run
 
     def should_execute(self, current_game_state: GameState):
-        ret_value = current_game_state.self_info.player_info['health'] < 40 and \
+        ret_value = current_game_state.self_info.player_info['health'] < self.hp_run and \
                     current_game_state.other_info.player_info['health'] > current_game_state.self_info.player_info[
                         'health'] and \
                     current_game_state.other_info.player_info['weapon1']['durability'] * 10 > \
@@ -150,7 +148,7 @@ class PolicyPussy(Policy):
                     utils.dist(current_game_state.self_info.player_info['x'],
                                current_game_state.self_info.player_info['y'],
                                current_game_state.other_info.player_info['x'],
-                               current_game_state.other_info.player_info['y']) <= DIST_RUN
+                               current_game_state.other_info.player_info['y']) <= self.dist_run
         print("PolicyPussy " + str(ret_value))
 
         return ret_value
