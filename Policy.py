@@ -161,11 +161,15 @@ class PolicyPussy(Policy):
         self.dist_run = dist_run
 
     def should_execute(self, current_game_state: GameState):
+
+        # other_player_can_kill = (current_game_state.other_info.player_info['weapon1'] is not None and
+        #             'swings' in current_game_state.other_info.player_info['weapon1'] and
+        #             current_game_state.other_info.player_info['weapon1']['swings'] * 10 > \
+        #             current_game_state.self_info.player_info['health'])
+
         ret_value = current_game_state.self_info.player_info['health'] < self.hp_run and \
-                    current_game_state.other_info.player_info['health'] > current_game_state.self_info.player_info[
-                        'health'] and \
-                    current_game_state.other_info.player_info['weapon1']['durability'] * 10 > \
-                    current_game_state.self_info.player_info['health'] and \
+                    current_game_state.other_info.player_info['health'] > current_game_state.self_info.player_info['health'] \
+                     and \
                     utils.dist(current_game_state.self_info.player_info['x'],
                                current_game_state.self_info.player_info['y'],
                                current_game_state.other_info.player_info['x'],

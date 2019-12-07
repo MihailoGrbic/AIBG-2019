@@ -12,9 +12,9 @@ playerTwo = 1
 get("http://localhost:9080/admin/createGame?gameId=" + str(gameId) +
            "&playerOne=" + str(playerOne) +
            "&playerTwo=" + str(playerTwo)  +
-           "&mapName=mapConfig1")
+           "&mapName=mapConfig2")
 
-gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerOne, BotBuildSwordAndAttackWithRunaway(30))
+gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerOne, BotBuildSwordAndAttack(40))
 
 gamePlay.play()
 

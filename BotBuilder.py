@@ -57,9 +57,6 @@ class GatherMetalForSwordFort(Policy):
         self_info = current_game_state.self_info
         required_metal = max(0, 3 - self_info.get_resource("METAL"))
         space_left = self_info.get_space_left()
-        if required_metal > space_left:
-            return True
-
         return "FORTRESS" in [item["itemType"] for item in
                               current_game_state.self_info.player_info["notFinishedBuildings"] +
                               current_game_state.self_info.player_info["buildings"]] \
@@ -75,9 +72,6 @@ class GatherWoodForSwordFort(Policy):
         self_info = current_game_state.self_info
         required_wood = max(0, 1 - self_info.get_resource("WOOD"))
         space_left = self_info.get_space_left()
-        if required_wood > space_left:
-            return True
-
         return "FORTRESS" in [item["itemType"] for item in
                               current_game_state.self_info.player_info["notFinishedBuildings"] +
                               current_game_state.self_info.player_info["buildings"]] \
@@ -104,9 +98,6 @@ class GatherWoodForFort(Policy):
         self_info = current_game_state.self_info
         required_wood = max(0, 2 - self_info.get_resource("WOOD"))
         space_left = self_info.get_space_left()
-        if required_wood > space_left:
-            return True
-
         return "HOUSE" in [item["itemType"] for item in
                            current_game_state.self_info.player_info["notFinishedBuildings"] +
                            current_game_state.self_info.player_info["buildings"]] \
@@ -122,9 +113,6 @@ class GatherStoneForFort(Policy):
         self_info = current_game_state.self_info
         required_stone = max(0, 3 - self_info.get_resource("STONE"))
         space_left = self_info.get_space_left()
-        if required_stone > space_left:
-            True
-
         return "HOUSE" in [item["itemType"] for item in
                            current_game_state.self_info.player_info["notFinishedBuildings"] +
                            current_game_state.self_info.player_info["buildings"]] \
@@ -148,9 +136,6 @@ class GatherStoneForHouse(Policy):
         self_info = current_game_state.self_info
         required_stone = max(0, 1 - self_info.get_resource("STONE"))
         space_left = self_info.get_space_left()
-        if required_stone > space_left:
-            True
-
         return current_game_state.self_info.player_info['resources']['WOOD'] == 4 \
                and current_game_state.self_info.player_info['resources']['STONE'] < 1
 
@@ -163,7 +148,4 @@ class GatherWoodForHouse(Policy):
         self_info = current_game_state.self_info
         required_wood = max(0, 4 - self_info.get_resource("WOOD"))
         space_left = self_info.get_space_left()
-        if required_wood > space_left:
-            True
-
         return current_game_state.self_info.player_info['resources']['WOOD'] < 4
