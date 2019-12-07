@@ -1,5 +1,6 @@
 from PlayerInfo import PlayerInfo
 from Map import Map
+from PlayerInfo import PlayerInfo
 from pprint import pprint
 
 
@@ -7,8 +8,9 @@ def dist(x1, y1, x2, y2):
     return abs(x1 - x2) + abs(y1 - y2)
 
 
-def move_available(current_map: Map, x, y):
-    return 0 <= x < current_map.width and 0 <= y < current_map.height and current_map.tiles[y][x]['item'] is None
+def move_available(current_map: Map, other_player: PlayerInfo, x, y):
+    return 0 <= x < current_map.width and 0 <= y < current_map.height and current_map.tiles[y][x]['item'] is None \
+           and (other_player.x != x or other_player.y != y)
 
 
 class Node():
@@ -26,7 +28,7 @@ class Node():
         return self.position == other.position
 
 
-def astar(maze: Map, start, end):
+def astar(maze: Map, other_player: PlayerInfo, start, end):
     """Returns a list of tuples as a path from the given start to the given end in the given maze"""
 
     # Create start and end node
@@ -74,7 +76,7 @@ def astar(maze: Map, start, end):
             node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
 
             # Make sure walkable terrain
-            if not move_available(maze, node_position[0], node_position[1]) and node_position != end:
+            if not move_available(maze, other_player, node_position[0], node_position[1]) and node_position != end:
                 continue
 
             # Create new node
@@ -106,8 +108,8 @@ def astar(maze: Map, start, end):
             open_list.append(child)
 
 
-def find_path_to(player: PlayerInfo, current_map: Map, x, y):
-    path = astar(current_map, (player.x, player.y), (x, y))
+def find_path_to(player: PlayerInfo, other_info: PlayerInfo, current_map: Map, x, y):
+    path = astar(current_map, other_info, (player.x, player.y), (x, y))
     path_wasd = []
     for i in range(len(path) - 1):
         diff = (path[i + 1][0] - path[i][0], path[i + 1][1] - path[i][1])
@@ -150,12 +152,12 @@ def direction(pos1: tuple, pos2: tuple) -> str:
         return 'd'
 
 
-def find_path_to_nearest(current_map: Map, player: PlayerInfo, resource_type):
+def find_path_to_nearest(current_map: Map, other_info: PlayerInfo, player: PlayerInfo, resource_type):
     min_len = 10000000
     pathoske = None
     loc_vec = find_resource_locations(current_map, resource_type)
     for loc in loc_vec:
-        curr_pathoske = find_path_to(player, current_map, loc[0], loc[1])
+        curr_pathoske = find_path_to(player, current_map, other_info, loc[0], loc[1])
         if len(curr_pathoske) < min_len:
             min_len = len(curr_pathoske)
             pathoske = curr_pathoske

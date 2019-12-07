@@ -5,6 +5,7 @@ from BotAttackWithSword import BotAttackWithSword
 from BotGetWeapon import BotGetWeapon
 from GameState import GameState
 from BotRandom import BotRandom
+import BotBuilder
 import Policy
 import utils
 
@@ -18,8 +19,9 @@ class BotBuildSwordAndAttackStupidEnemy(Bot):
         return [
             Policy.AttackWithSword(BotAttackWithSword(False)),
             Policy.GetSword(BotGetWeapon()),
-            Policy.BuildSwordFortress(self.x),
-            Policy.PolicyAlwaysAllow(BotRandom())
+            # Policy.BuildSwordFortress(self.x),
+            BotBuilder.StarterPolicy(),
+            Policy.PolicyAlwaysAllow(BotBuilder.BotBuilder())
         ]
 
     def play_single_turn(self, current_game_state: GameState):
