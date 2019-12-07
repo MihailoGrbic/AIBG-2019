@@ -31,7 +31,10 @@ def next_position(move, current_map, self_info):
 class BotGrbic(Bot):
     state = 1
     
-    def play_single_turn(self, current_game_state, current_map, self_info, other_info):
+    def play_single_turn(self, current_game_state):
+        current_map = current_game_state.map
+        self_info = current_game_state.self_info
+        other_info = current_game_state.other_info
         print(self.state)
         # Survey the area
         if self.state == 1:
@@ -150,18 +153,33 @@ class BotGrbic(Bot):
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
             self.doAction("bsf" + path[0])
             self.state += 1
-            self.sword_house_position = self.min_settle_pos
+            self.sword_fort_position = self.min_settle_pos
+
+
+            self.state = 50
             return
         
-        # # Wait untill sword fort
-        # if self.state == 19
-            
-        #     path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-        #     self.doAction("bsf" + path[0])
-        #     self.state += 1
-        #     return
 
-        if self.state == 19:
+
+
+        # Wait untill sword fort is built
+        if self.state == 50:
+            if current_map.tiles[self.sword_fort_position[1]][self.sword_fort_position[0]]['item'] is None: self.doAction("")
+            else: self.state += 1
+
+        # Take 2 swords
+        if self.state == 51:
+            path = find_path_to(self_info, current_map, self.sword_fort_position[0], self.sword_fort_position[1])
+            if self_info.player_info["weapon1"] is None or self_info.player_info["weapon2"] is None:
+                self.doAction("tw" + path[0])
+            else:
+                self.state += 1
+
+        # KILL
+        if self.state == 52:
+            self.doAction("")
+
+        if self.state == 90:
             self.doAction("")
         # Try to build 
         # print(current_map.tiles[self_info.x][self_info.y])
