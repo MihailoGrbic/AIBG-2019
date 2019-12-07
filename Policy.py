@@ -17,6 +17,7 @@ class Policy:
 
 class PolicyAlwaysAllow(Policy):
     def should_execute(self, current_game_state: GameState):
+        print("PolicyAlwaysAllow " + str(True))
         return True
 
 
@@ -36,6 +37,7 @@ class PolicyRandom(Policy):
         self.prec = prec
 
     def should_execute(self, current_game_state: GameState):
+        print("PolicyRandom " + str(random.random() < self.prec))
         return random.random() < self.prec
 
 
@@ -45,6 +47,7 @@ def sword_fortress_exists(current_game_state):
 
 class BuildSwordFortress(Policy):
     def should_execute(self, current_game_state: GameState):
+        print("BuildSwordFortress " + str(not sword_fortress_exists(current_game_state)))
         return not sword_fortress_exists(current_game_state)
 
 
@@ -54,10 +57,14 @@ class GetSword(Policy):
                                 [b for b in current_game_state.self_info.player_info["buildings"] if
                                  b["itemType"] == "SWORD_FORTRESS"])
 
-        return sword_fortress_exists(current_game_state) \
+        ret_val = sword_fortress_exists(current_game_state) \
             and ((current_game_state.self_info.player_info["weapon1"] is None
             and current_game_state.self_info.player_info["weapon2"] is None)
             or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
+
+        print("GetSword " + str(ret_val))
+
+        return ret_val
 
 
 class AttackWithSword(Policy):
@@ -70,19 +77,28 @@ class AttackWithSword(Policy):
         if current_game_state.self_info.player_info["weapon1"] is not None: num_of_swords += 1 
         if current_game_state.self_info.player_info["weapon2"] is not None: num_of_swords += 1 
 
-        return num_of_swords == 2 or (num_of_swords == 1 and md is not None \
+        ret_val = num_of_swords == 2 or (num_of_swords == 1 and md is not None \
         and utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) > 1)
+
+        print("AttackWithSword " + str(ret_val))
+
+        return ret_val
 
 
 
 class GetReadyForBattle(Policy):
     def should_execute(self, current_game_state: GameState):
-        return current_game_state.self_info.player_info["weapon1"] is not None \
+
+        ret_val = current_game_state.self_info.player_info["weapon1"] is not None \
                and current_game_state.self_info.player_info["weapon2"] is not None \
                and utils.dist(current_game_state.self_info.player_info['x'],
                               current_game_state.self_info.player_info['y'],
                               current_game_state.other_info.player_info['x'],
                               current_game_state.other_info.player_info['y']) == 2
+
+        print("GetReadyForBattle " + str(ret_val))
+
+        return ret_val
 
 
 class GatherResource(Policy):
@@ -92,4 +108,9 @@ class GatherResource(Policy):
         self.amount = amount
 
     def should_execute(self, current_game_state: GameState):
-        return current_game_state.self_info.player_info["resources"][self.resource] < self.amount
+
+        ret_val = current_game_state.self_info.player_info["resources"][self.resource] < self.amount
+
+        print("GatherResource " + str(ret_val))
+
+        return ret_val
