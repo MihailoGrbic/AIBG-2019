@@ -4,6 +4,7 @@ from BotBuild import BotBuild
 from BotAttackWithSword import BotAttackWithSword
 from BotGetWeapon import BotGetWeapon
 from GameState import GameState
+from BotRandom import BotRandom
 import Policy
 import utils
 
@@ -17,7 +18,8 @@ class BotBuildSwordAndAttack(Bot):
         return [
             Policy.BuildSwordFortress(self.x),
             Policy.GetSword(BotGetWeapon()),
-            Policy.AttackWithSword(BotAttackWithSword())
+            Policy.AttackWithSword(BotAttackWithSword()),
+            Policy.Random(BotRandom())
         ]
 
     def get_child_bot(self, current_game_state):

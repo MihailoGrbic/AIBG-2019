@@ -10,5 +10,5 @@ class BotWalker(Bot):
         self.y_sel = y
 
     def play_single_turn(self, current_game_state):
-        path = utils.find_path_to(current_game_state.self_info, current_game_state.current_map, self.x_sel, self.y_sel)
+        path = utils.find_path_to(current_game_state.self_info, current_game_state.map, self.x_sel, self.y_sel)
         return path[0]
