@@ -26,4 +26,7 @@ class BotBuildSwordAndAttack(Bot):
         ]
 
     def play_single_turn(self, current_game_state: GameState):
+        print(current_game_state.self_info.player_info["buildings"])
+        print()
+        print(current_game_state.other_info.player_info["buildings"])
         return self.get_child_bot(current_game_state).play_single_turn(current_game_state)

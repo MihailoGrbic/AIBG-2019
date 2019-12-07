@@ -7,8 +7,8 @@ def update_peaceful(current_game_state):
     if current_game_state.state_of_mind["Peaceful"] == True:
         res = current_game_state.other_info.player_info['resources']
         current_res = sum([res['STONE'], res['WOOD'], res['METAL']])
-        if abs(current_res - current_game_state.state_of_mind["OpponentResources"]) > 0:
-            current_game_state.state_of_mind["Peaceful"] = False
+        # if abs(current_res - current_game_state.state_of_mind["OpponentResources"]) > 0:
+        #     current_game_state.state_of_mind["Peaceful"] = False
 
         print("Peacefull mode: Health Diff: ", current_game_state.state_of_mind['AllSelfHealthDiff'])
         print("Peacefull mode: Last was stupid: ", current_game_state.state_of_mind['LastMoveWasStupid'])
