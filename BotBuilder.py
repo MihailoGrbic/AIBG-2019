@@ -55,7 +55,7 @@ class GatherMetalForSwordFort(Policy):
 
     def should_execute(self, current_game_state: GameState):
         self_info = current_game_state.self_info
-        required_metal = min(0, 3 - self_info.get_resource("METAL"))
+        required_metal = max(0, 3 - self_info.get_resource("METAL"))
         space_left = self_info.get_space_left()
         if required_metal > space_left:
             if self_info.get_resource("METAL") > 0:
@@ -75,7 +75,7 @@ class GatherWoodForSwordFort(Policy):
 
     def should_execute(self, current_game_state: GameState):
         self_info = current_game_state.self_info
-        required_wood = min(0, 1 - self_info.get_resource("WOOD"))
+        required_wood = max(0, 1 - self_info.get_resource("WOOD"))
         space_left = self_info.get_space_left()
         if required_wood > space_left:
             if self_info.get_resource("METAL") > 0:
@@ -106,7 +106,7 @@ class GatherWoodForFort(Policy):
 
     def should_execute(self, current_game_state: GameState):
         self_info = current_game_state.self_info
-        required_wood = min(0, 2 - self_info.get_resource("WOOD"))
+        required_wood = max(0, 2 - self_info.get_resource("WOOD"))
         space_left = self_info.get_space_left()
         if required_wood > space_left:
             if self_info.get_resource("METAL") > 0:
@@ -127,7 +127,7 @@ class GatherStoneForFort(Policy):
 
     def should_execute(self, current_game_state: GameState):
         self_info = current_game_state.self_info
-        required_stone = min(0, 3 - self_info.get_resource("STONE"))
+        required_stone = max(0, 3 - self_info.get_resource("STONE"))
         space_left = self_info.get_space_left()
         if required_stone > space_left:
             if self_info.get_resource("METAL") > 0:
@@ -156,7 +156,7 @@ class GatherStoneForHouse(Policy):
 
     def should_execute(self, current_game_state: GameState):
         self_info = current_game_state.self_info
-        required_stone = min(0, 1 - self_info.get_resource("STONE"))
+        required_stone = max(0, 1 - self_info.get_resource("STONE"))
         space_left = self_info.get_space_left()
         if required_stone > space_left:
             if self_info.get_resource("METAL") > 0:
@@ -174,7 +174,7 @@ class GatherWoodForHouse(Policy):
 
     def should_execute(self, current_game_state: GameState):
         self_info = current_game_state.self_info
-        required_wood = min(0, 4 - self_info.get_resource("WOOD"))
+        required_wood = max(0, 4 - self_info.get_resource("WOOD"))
         space_left = self_info.get_space_left()
         if required_wood > space_left:
             if self_info.get_resource("METAL") > 0:

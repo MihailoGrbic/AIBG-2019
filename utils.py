@@ -13,6 +13,13 @@ def move_available(current_map: Map, other_player: PlayerInfo, x, y):
            and (other_player.x != x or other_player.y != y)
 
 
+def can_move(current_map: Map, other_player: PlayerInfo, self_pos):
+    for diff in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+        if move_available(current_map, other_player, self_pos[0], self_pos[1]):
+            return True
+    return False
+
+
 class Node():
     """A node class for A* Pathfinding"""
 
