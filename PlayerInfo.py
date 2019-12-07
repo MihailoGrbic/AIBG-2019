@@ -1,4 +1,4 @@
-from utils import *
+# from utils import *
 
 # Example dict:
 # {'buildings': [],
@@ -30,13 +30,13 @@ class PlayerInfo(object):
         self.x = self.player_info['x']
         self.y = self.player_info['y']
 
-    def find_nearest_building(self, building_name = "SWORD_FORTRESS"):
-        min_dist = 100000
-        for building in self.player_info["buildings"]:
-            if building["itemType"] == building_name:
-                if min_dist > dist(self.x, self.y, building["x"], building["y"]):
-                    min_dist = dist(self.x, self.y, building["x"], building["y"])
-                    the_building = building
+    # def find_nearest_building(self, building_name = "SWORD_FORTRESS"):
+    #     min_dist = 100000
+    #     for building in self.player_info["buildings"]:
+    #         if building["itemType"] == building_name:
+    #             if min_dist > dist(self.x, self.y, building["x"], building["y"]):
+    #                 min_dist = dist(self.x, self.y, building["x"], building["y"])
+    #                 the_building = building
         
-        if min_dist == 100000: return None, None
-        else: return min_dist, the_building
+    #     if min_dist == 100000: return None, None
+    #     else: return min_dist, the_building
