@@ -5,6 +5,9 @@ from InteligenceUtil import find_best_sword_settlement
 from utils import *
 import random
 
+def find_best_building(buildings):
+    pass
+
 def is_empty(move, current_map, self_info):
     checkx, checky = next_position(move, current_map, self_info)
     return current_map.tiles[checkx][checky]['item'] is None
@@ -48,9 +51,7 @@ class BotGrbic(Bot):
 
         # Goto wood
         if self.state == 2:
-            print("kurcina")
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
-            print("kurcina2")
             if len(path) > 1: self.doAction(path[0])
             else: self.state += 1
                 
@@ -76,12 +77,22 @@ class BotGrbic(Bot):
         # Goto house
         if self.state == 6:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+
+            if len(path) == 0: 
+                path2 = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
+                for i in ['w', 'a', 's', 'd']:
+                    if i != path2:
+                        self.doAction(i)
+                        return
+
             if len(path) > 1: self.doAction(path[0])
-            else: self.state += 1
+            else: 
+                self.state += 1
 
         # Build house
         if self.state == 7:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+
             self.doAction("bh" + path[0])
             self.state += 1
             return
@@ -142,13 +153,6 @@ class BotGrbic(Bot):
             else: self.state += 1
 
         # Upgrade fort
-        if self.state == 17:
-            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.doAction("bsf" + path[0])
-            self.state += 1
-            return
-
-        # Upgrade fort
         if self.state == 18:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
             self.doAction("bsf" + path[0])
@@ -175,9 +179,46 @@ class BotGrbic(Bot):
             else:
                 self.state += 1
 
-        # KILL
+        # READY TO KILL
         if self.state == 52:
-            self.doAction("")
+            if self_info.player_info["weapon1"] is None or self_info.player_info["weapon2"] is None:
+                self.state = 56
+            elif len(other_info.player_info["buildings"]) > 0:
+
+            play_single_turn(self, current_game_state)
+            other_info.player_info["buildings"]
+            
+        # Goto building to kill
+        if self.state == 53:
+            path = find_path_to(self_info, current_map, self.enemy_building[0], self.enemy_building[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
+
+        # Kill building
+        if self.state == 54:
+            path = find_path_to(self_info, current_map, self.enemy_building[0], self.enemy_building[1])
+            if current_map.tiles[self.enemy_building[1]][self.enemy_building[0]]['item'] is not None and \
+            current_map.tiles[self.enemy_building[1]][self.enemy_building[0]]['shop'] == False:
+                self.doAction("sa" + path[0])
+            else: 
+                self.state = 52
+                self.play_single_turn(current_game_state)
+        
+        # Goto player to kill
+        if self.state == 55:
+            path = find_path_to(self_info, current_map, other_info.y, other_info.x)
+            if len(path) > 1: self.doAction(path[0])
+            else: 
+                state = 52
+                self.doAction("sa" + path[0])
+
+        # Goto sword fort to refill
+        if self.state == 56:
+            path = find_path_to(self_info, current_map, self.sword_fort_position[0], self.sword_fort_position[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: 
+                self.state = 51
+                self.play_single_turn(current_game_state)
 
         if self.state == 90:
             self.doAction("")
