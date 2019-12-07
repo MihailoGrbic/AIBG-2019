@@ -1,5 +1,7 @@
 from GamePlaySingleBot import GamePlaySingleBot
 from BotRandom import BotRandom
+from BotBuilder import BotBuilder
+from BotBuildSwordAndAttack import BotBuildSwordAndAttack
 from BotBuildSwordAndAttackStupidEnemy import BotBuildSwordAndAttackStupidEnemy
 from Client import get
 
