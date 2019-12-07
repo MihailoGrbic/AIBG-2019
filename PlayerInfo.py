@@ -29,6 +29,13 @@ class PlayerInfo(object):
         self.x = self.player_info['x']
         self.y = self.player_info['y']
 
+    def get_space_left(self):
+        res = self.player_info["resources"]
+        return res["WOOD"] + res["METAL"] + res["STONE"]
+
+    def get_resource(self, resource: str):
+        return self.player_info["resources"][resource]
+
     # def find_nearest_building(self, building_name = "SWORD_FORTRESS"):
     #     min_dist = 100000
     #     for building in self.player_info["buildings"]:
