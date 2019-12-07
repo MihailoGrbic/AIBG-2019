@@ -117,7 +117,7 @@ class BotGrbic(Bot):
         # Take wood 2
         if self.state == 13:
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
-            if self_info.player_info["resources"]["WOOD"] < 2: self.doAction("tr" + path[0])
+            if self_info.player_info["resources"]["WOOD"] < 1: self.doAction("tr" + path[0])
             else: self.state += 1
 
         # Goto metal
@@ -144,9 +144,24 @@ class BotGrbic(Bot):
             self.doAction("bsf" + path[0])
             self.state += 1
             return
-        
-        
+
+        # Upgrade fort
         if self.state == 18:
+            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            self.doAction("bsf" + path[0])
+            self.state += 1
+            self.sword_house_position = self.min_settle_pos
+            return
+        
+        # # Wait untill sword fort
+        # if self.state == 19
+            
+        #     path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+        #     self.doAction("bsf" + path[0])
+        #     self.state += 1
+        #     return
+
+        if self.state == 19:
             self.doAction("")
         # Try to build 
         # print(current_map.tiles[self_info.x][self_info.y])
