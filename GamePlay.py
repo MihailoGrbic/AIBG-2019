@@ -1,6 +1,18 @@
 from GameState import GameState
 from Client import get
 
+
+def update_peaceful(current_game_state):
+    # Check if peaceful
+    if current_game_state.state_of_mind["Peaceful"] == True:
+        res = current_game_state.other_info.player_info['resources']
+        current_res = sum([res['STONE'], res['WOOD'], res['METAL']])
+        if abs(current_res - current_game_state.state_of_mind["OpponentResources"]) > 0:
+            current_game_state.state_of_mind["Peaceful"] = False
+
+    return current_game_state.state_of_mind["Peaceful"]
+
+
 class GamePlay(object):
     def __init__(self, url, gameId, playerId):
         self.url = url
@@ -31,6 +43,7 @@ class GamePlay(object):
 
     def play(self):
         while True:
+            update_peaceful(self.current_game_state)
             action = self.get_child_bot().play_single_turn(self.current_game_state)
             self.doAction(action)
 

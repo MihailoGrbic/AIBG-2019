@@ -73,7 +73,7 @@ class GatherWoodForSwordFort(Policy):
 
 class BuildFort(Policy):
     def __init__(self):
-        super().__init__(BotConstructor("FORT"))
+        super().__init__(BotConstructor("FORTRESS"))
 
     def should_execute(self, current_game_state: GameState):
         return "HOUSE" in [item["itemType"] for item in
