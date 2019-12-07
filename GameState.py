@@ -4,7 +4,7 @@ from PlayerInfo import PlayerInfo
 
 class GameState(object):
     def __init__(self, res, gameId, playerId):
-        self.plaferId = playerId
+        self.playerId = playerId
         self.gameId = gameId
         self.game_state = res
         self.turns_left = res['turn']
