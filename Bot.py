@@ -92,17 +92,23 @@ actions = {
 class Bot(object):
     def __init__(self, url, gameId, playerId, random=False):
         self.url = url
+        # TODO (rosko): Ovo je suvisno?
         self.gameId = gameId
+
         self.playerId = playerId
+        self.policy_list = None
         self.current_game_state = None
         self.current_map = None
         self.self_info = None
         self.other_info = None
 
-        if random:
-            self.connect_random()
-        else:
-            self.connect()
+    def get_policy_list(self):
+        return self.policy_list
+
+    def get_child_bot(self, args):
+        for policy in self.policy_list:
+            if policy.should_execute(args):
+                return policy.bot
 
     def update_data(self, res):
         if not res['success']:
