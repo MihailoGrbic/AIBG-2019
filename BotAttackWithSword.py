@@ -7,11 +7,15 @@ import utils
 
 class BotAttackWithSword(Bot):
 
-    def __init__(self):
+    def __init__(self, priority_buildings = True):
         super().__init__()
         self.bot_walker = BotWalker()
+        self.priority_buildings = priority_buildings
 
     def play_single_turn(self, current_game_state: GameState):
+        [b for b in current_game_state.other_info.player_info["buildings"] if
+                b["itemType"] == "SWORD_FORTRESS" and b["id"] == current_game_state.playerId]
+
         if utils.dist(current_game_state.self_info.x, current_game_state.self_info.y, current_game_state.other_info.x,
                       current_game_state.other_info.y) == 1:
             if current_game_state.other_info.x == current_game_state.self_info.x + 1:

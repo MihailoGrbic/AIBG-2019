@@ -52,9 +52,7 @@ class BotBuild(Bot):
 
         # Goto wood
         if self.state == 2:
-            print("kurcina")
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
-            print("kurcina2")
             if len(path) > 1:
                 return path[0]
             else:
@@ -180,13 +178,4 @@ class BotBuild(Bot):
             self.state += 1
             return "bsf" + path[0]
 
-        # Upgrade fort
-        if self.state == 18:
-            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.state += 1
-            self.sword_fort_position = self.min_settle_pos
-            self.state = 50
-            return "bsf" + path[0]
 
-        # Try to build
-        # print(current_map.tiles[self_info.x][self_info.y])

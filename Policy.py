@@ -46,10 +46,15 @@ class GetSword(Policy):
                                 [b for b in current_game_state.self_info.player_info["buildings"] if
                                  b["itemType"] == "SWORD_FORTRESS" and b["id"] == current_game_state.playerId])
 
+        # for b in current_game_state.self_info.player_info["buildings"] if
+        #                          b["itemType"] == "SWORD_FORTRESS" and b["id"] == current_game_state.playerId                         
+        # target_building = 
+
+        #and   utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) - 1
         return sword_fortress_exists(current_game_state) \
-               and ((current_game_state.self_info.player_info["weapon1"] is None \
-                     and current_game_state.self_info.player_info["weapon2"] is None) \
-                    or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
+                                    and ((current_game_state.self_info.player_info["weapon1"] is None \
+                                    and current_game_state.self_info.player_info["weapon2"] is None) \
+                                    or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
 
 
 class AttackWithSword(Policy):
