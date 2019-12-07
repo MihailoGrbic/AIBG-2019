@@ -1,5 +1,6 @@
 from Bot import Bot
 import GameState
+import utils
 from GameState import GameState
 import utils
 
@@ -58,3 +59,11 @@ class AttackWithSword(Policy):
 class Random(Policy):
     def should_execute(self, current_game_state: GameState):
         return True
+
+
+class GetReadyForBattle(Policy):
+    def should_execute(self, current_game_state : GameState):
+        return current_game_state.self_info.player_info["weapon1"] is not None \
+                and current_game_state.self_info.player_info["weapon2"] is not None \
+                and utils.dist(current_game_state.self_info.player_info['x'],current_game_state.self_info.player_info['y'],
+                               current_game_state.other_info.player_info['x'],current_game_state.other_info.player_info['y'])==2
