@@ -5,6 +5,7 @@ from BotAttackWithSword import BotAttackWithSword
 from BotGetWeapon import BotGetWeapon
 from GameState import GameState
 from BotRandom import BotRandom
+import BotBuilder
 import Policy
 import utils
 
@@ -18,7 +19,8 @@ class BotBuildSwordAndAttack(Bot):
         return [
             Policy.AttackWithSword(BotAttackWithSword()),
             Policy.GetSword(BotGetWeapon()),
-            Policy.BuildSwordFortress(self.x),
+            # Policy.BuildSwordFortress(self.x),
+            BotBuilder.StarterPolicy(),
             Policy.Random(BotRandom())
         ]
 

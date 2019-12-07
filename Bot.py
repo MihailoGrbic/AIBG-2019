@@ -55,35 +55,35 @@ actions = {
 
     # fort
 
-    "FORT_": "bf",
-    "FORT_DOWN": "bfs",
-    "FORT_UP": "bfw",
-    "FORT_LEFT": "bfa",
-    "FORT_RIGHT": "bfd",
+    "FORTRESS_": "bf",
+    "FORTRESS_DOWN": "bfs",
+    "FORTRESS_UP": "bfw",
+    "FORTRESS_LEFT": "bfa",
+    "FORTRESS_RIGHT": "bfd",
 
     # shield fort
 
-    "SHIELD_FORT_": "bshf",
-    "SHIELD_FORT_DOWN": "bshfs",
-    "SHIELD_FORT_UP": "bshfw",
-    "SHIELD_FORT_LEFT": "bshfa",
-    "SHIELD_FORT_RIGHT": "bshfd",
+    "SHIELD_FORTRESS_": "bshf",
+    "SHIELD_FORTRESS_DOWN": "bshfs",
+    "SHIELD_FORTRESS_UP": "bshfw",
+    "SHIELD_FORTRESS_LEFT": "bshfa",
+    "SHIELD_FORTRESS_RIGHT": "bshfd",
 
     # sword fort
 
-    "SWORD_FORT_": "bsf",
-    "SWORD_FORT_DOWN": "bsfs",
-    "SWORD_FORT_UP": "bsfw",
-    "SWORD_FORT_LEFT": "bsfa",
-    "SWORD_FORT_RIGHT": "bsfd",
+    "SWORD_FORTRESS_": "bsf",
+    "SWORD_FORTRESS_DOWN": "bsfs",
+    "SWORD_FORTRESS_UP": "bsfw",
+    "SWORD_FORTRESS_LEFT": "bsfa",
+    "SWORD_FORTRESS_RIGHT": "bsfd",
 
     # arrow fort
 
-    "ARROW_FORT_": "baf",
-    "ARROW_FORT_DOWN": "bafs",
-    "ARROW_FORT_UP": "bafw",
-    "ARROW_FORT_LEFT": "bafa",
-    "ARROW_FORT_RIGHT": "bafd",
+    "ARROW_FORTRESS_": "baf",
+    "ARROW_FORTRESS_DOWN": "bafs",
+    "ARROW_FORTRESS_UP": "bafw",
+    "ARROW_FORTRESS_LEFT": "bafa",
+    "ARROW_FORTRESS_RIGHT": "bafd",
 
     # drop shield
 
