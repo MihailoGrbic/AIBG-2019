@@ -1,17 +1,17 @@
-from BotWalker import BotWalker
-import Client
+from GamePlaySingleBot import GamePlaySingleBot
+from BotRandom import BotRandom
+from Client import get
 
-gameId = 1
+gameId = 2
 playerOne = 0
 playerTwo = 1
 
-Client.get("http://localhost:9080/admin/createGame?gameId=" + "0" +
-           "&playerOne=" + "1" +
-           "&playerTwo=" + "2"  +
+get("http://localhost:9080/admin/createGame?gameId=" + str(gameId) +
+           "&playerOne=" + str(playerOne) +
+           "&playerTwo=" + str(playerTwo)  +
            "&mapName=mapConfig")
 
-# bot = BotKeyboard('http://localhost:9080', 0, 2)
-bot = BotWalker('http://localhost:9080', 0, 2)
+gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerOne, BotRandom())
 
-bot.connect()
-bot.game()
+gamePlay.play()
+

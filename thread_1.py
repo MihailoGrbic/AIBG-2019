@@ -1,11 +1,6 @@
+from GamePlaySingleBot import GamePlaySingleBot
 from BotRandom import BotRandom
-import Client
-from BotLeft import BotLeft
-from BotKeyboard import BotKeyboard
-from BotGrbic import BotGrbic
 
+gamePlay = GamePlaySingleBot('http://localhost:9080', 2, 1, BotRandom())
 
-bot = BotRandom('http://localhost:9080', 0, 1)
-
-bot.connect()
-bot.game()
+gamePlay.play()

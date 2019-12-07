@@ -17,5 +17,5 @@ class BotGetWeapon(Bot):
         if md is not None:
             self.bot_walker.x_sel = md[0]
             self.bot_walker.y_sel = md[1]
-            self.bot_walker.play_single_turn(current_game_state)
+            return self.bot_walker.play_single_turn(current_game_state)
         print("E, sjebao si se")
