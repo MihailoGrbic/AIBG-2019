@@ -4,5 +4,5 @@ from Bot import actions
 
 class BotLeft(Bot):
 
-    def play_single_turn(self, current_game_state, current_map, self_info, other_info):
+    def play_single_turn(self, current_game_state):
         self.doAction(actions["LEFT"])

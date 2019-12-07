@@ -5,7 +5,7 @@ import random
 
 class BotRandom(Bot):
 
-    def play_single_turn(self, current_game_state, current_map, self_info, other_info):
+    def play_single_turn(self, current_game_state):
         x = random.randint(0, 4)
         if x == 0:
             self.doAction(actions["UP"])

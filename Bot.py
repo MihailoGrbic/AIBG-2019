@@ -97,16 +97,13 @@ class Bot(object):
         self.playerId = playerId
         self.policy_list = None
         self.current_game_state = None
-        self.current_map = None
-        self.self_info = None
-        self.other_info = None
 
     def get_policy_list(self):
         return self.policy_list
 
-    def get_child_bot(self, args):
+    def get_child_bot(self, current_game_state):
         for policy in self.policy_list:
-            if policy.should_execute(args):
+            if policy.should_execute(current_game_state):
                 return policy.bot
 
     def update_data(self, res):
@@ -115,10 +112,7 @@ class Bot(object):
 
         res = res['result']
 
-        self.current_game_state = GameState(res)
-        self.current_map = Map(res)
-        self.self_info = PlayerInfo(res, player1=res['player1']['id'] == self.playerId)
-        self.other_info = PlayerInfo(res, player1=res['player1']['id'] != self.playerId)
+        self.current_game_state = GameState(res, self.gameId, self.playerId)
 
     def connect_random(self):
         res = get(self.url + '/train/random?playerId=' + str(self.playerId))
@@ -141,13 +135,10 @@ class Bot(object):
 
     def game(self):
         while True:
-            self.play_single_turn(self.current_game_state, self.current_map, self.self_info, self.other_info)
+            self.play_single_turn(self.current_game_state)
 
     # ovo se override-uje za taktiku
     # GameState current_game_state
-    # Map current_map
-    # PlayerInfo self_info
-    # PlayerInfo other_info
-    def play_single_turn(self, current_game_state, current_map, self_info, other_info):
+    def play_single_turn(self, current_game_state):
         while True:
             self.doAction(actions["DOWN"])
