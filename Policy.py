@@ -1,5 +1,5 @@
 from Bot import Bot
-# from BotRunnaway import BotRunnaway
+from BotRunnaway import BotRunnaway
 import GameState
 import utils
 from GameState import GameState
@@ -63,13 +63,25 @@ class GetSword(Policy):
         if md is not None:
             nearest_sword = current_game_state.map.tiles[md[1]][md[0]]["item"]
             two_swords_in = max(0, 20 - nearest_sword["numWeapons"] * 10 - nearest_sword["timeSinceMakeWeapon"])
+            one_sword_in = max(0, 10 - nearest_sword["numWeapons"] * 10 - nearest_sword["timeSinceMakeWeapon"])
+        else:
+            print("GetSword False")
+            return False
 
-        ret_val = sword_fortress_exists(current_game_state) \
-                  and two_swords_in <= utils.dist(md[0], md[1], current_game_state.self_info.x,
-                                                  current_game_state.self_info.y) - 1 \
-                  and ((current_game_state.self_info.player_info["weapon1"] is None \
-                        and current_game_state.self_info.player_info["weapon2"] is None) \
-                       or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
+        num_of_swords = 0
+        if current_game_state.self_info.player_info["weapon1"] is not None:
+            num_of_swords += 1
+        if current_game_state.self_info.player_info["weapon2"] is not None:
+            num_of_swords += 1
+
+        go_for_two_swords = two_swords_in <= utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) - 1 \
+            and num_of_swords == 0
+
+        take_one_sword = utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1 \
+                         and one_sword_in == 0 \
+                         and num_of_swords == 1
+
+        ret_val = sword_fortress_exists(current_game_state) and (go_for_two_swords or take_one_sword)
 
         print("GetSword " + str(ret_val))
 
@@ -92,8 +104,10 @@ class AttackWithSword(Policy):
                                  b["itemType"] == "SWORD_FORTRESS"])
 
         num_of_swords = 0
-        if current_game_state.self_info.player_info["weapon1"] is not None: num_of_swords += 1
-        if current_game_state.self_info.player_info["weapon2"] is not None: num_of_swords += 1
+        if current_game_state.self_info.player_info["weapon1"] is not None:
+            num_of_swords += 1
+        if current_game_state.self_info.player_info["weapon2"] is not None:
+            num_of_swords += 1
 
         ret_val = num_of_swords == 2 or (num_of_swords == 1 and md is not None \
                                          and utils.dist(md[0], md[1], current_game_state.self_info.x,
@@ -132,17 +146,15 @@ class GatherResource(Policy):
         return ret_val
 
 
-HP_RUN = 40
-DIST_RUN = 4
-
-
 class PolicyPussy(Policy):
 
-    def __init__(self, bot: Bot):
-        super().__init__(BotRunnaway)
+    def __init__(self, bot: Bot,hp_run,dist_run):
+        super().__init__(BotRunnaway())
+        self.hp_run = hp_run
+        self.dist_run = dist_run
 
     def should_execute(self, current_game_state: GameState):
-        ret_value = current_game_state.self_info.player_info['health'] < 40 and \
+        ret_value = current_game_state.self_info.player_info['health'] < self.hp_run and \
                     current_game_state.other_info.player_info['health'] > current_game_state.self_info.player_info[
                         'health'] and \
                     current_game_state.other_info.player_info['weapon1']['durability'] * 10 > \
@@ -150,7 +162,7 @@ class PolicyPussy(Policy):
                     utils.dist(current_game_state.self_info.player_info['x'],
                                current_game_state.self_info.player_info['y'],
                                current_game_state.other_info.player_info['x'],
-                               current_game_state.other_info.player_info['y']) <= DIST_RUN
+                               current_game_state.other_info.player_info['y']) <= self.dist_run
         print("PolicyPussy " + str(ret_value))
 
         return ret_value

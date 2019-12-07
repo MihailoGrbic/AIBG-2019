@@ -15,8 +15,6 @@ def field_available(x,y,currgs):
     return True
 
 class BotRunnaway(Bot):
-    def __init__(self, build_type: str):
-        self.build_type = build_type
 
     def play_single_turn(self, current_game_state: GameState):
 

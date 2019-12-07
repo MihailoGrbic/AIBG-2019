@@ -46,7 +46,7 @@ class GamePlay(object):
             self.url, self.playerId, self.gameId, a))
         self.update_data(res)
         ss = self.current_game_state.self_info
-        print("self player " + str(ss.is_me) + " " + str(ss.x) + " " + str(ss.y))
+        print("self player " + str(ss.x) + " " + str(ss.y))
 
     def play(self):
         while True:

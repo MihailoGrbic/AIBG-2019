@@ -22,7 +22,6 @@
 class PlayerInfo(object):
     def __init__(self, res, player1):
         # TODO (djokjulapfe): nisam siguran kako ovo player1/2 radi
-        self.is_me = player1
         if player1:
             self.player_info = res["player1"]
         else:
