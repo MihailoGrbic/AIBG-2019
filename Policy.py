@@ -111,7 +111,7 @@ class AttackWithSword(Policy):
 
         ret_val = num_of_swords == 2 or (num_of_swords == 1 and (md is None 
                                         or utils.dist(md[0], md[1], current_game_state.self_info.x, 
-                                        current_game_state.self_info.y) > 1)
+                                        current_game_state.self_info.y) > 1))
 
         print("AttackWithSword " + str(ret_val))
 
