@@ -17,7 +17,7 @@ class BotBuildSwordAndAttack(Bot):
 
     def get_policy_list(self):
         return [
-            Policy.AttackWithSword(BotAttackWithSword()),
+            Policy.AttackWithSword(BotAttackWithSword(priority_buildings=True)),
             Policy.GetSword(BotGetWeapon()),
             # Policy.BuildSwordFortress(self.x),
             BotBuilder.StarterPolicy(),
