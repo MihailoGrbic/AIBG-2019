@@ -16,10 +16,11 @@ class BotBuildSwordAndAttack(Bot):
 
     def get_policy_list(self):
         return [
-            Policy.AttackWithSword(BotAttackWithSword(True)),
+            Policy.AttackWithSword(BotAttackWithSword(priority_buildings=True)),
             Policy.GetSword(BotGetWeapon()),
             Policy.BuildSwordFortress(self.x),
             Policy.Random(BotRandom())
+            
         ]
 
     def play_single_turn(self, current_game_state: GameState):

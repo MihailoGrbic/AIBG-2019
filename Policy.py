@@ -45,10 +45,15 @@ class GetSword(Policy):
                                 [b for b in current_game_state.self_info.player_info["buildings"] if
                                  b["itemType"] == "SWORD_FORTRESS"])
 
+        if md is not None:
+            nearest_sword = current_game_state.map.tiles[md[1]][md[0]]["item"]
+            two_swords_in = max(0, 20 - nearest_sword["numWeapons"] * 10 - nearest_sword["timeSinceMakeWeapon"])
+
         return sword_fortress_exists(current_game_state) \
-                                    and ((current_game_state.self_info.player_info["weapon1"] is None \
-                                    and current_game_state.self_info.player_info["weapon2"] is None) \
-                                    or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
+            and two_swords_in <= utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) - 1 \
+            and ((current_game_state.self_info.player_info["weapon1"] is None \
+            and current_game_state.self_info.player_info["weapon2"] is None) \
+            or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
 
 
 class AttackWithSword(Policy):
