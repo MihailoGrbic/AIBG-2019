@@ -109,9 +109,9 @@ class AttackWithSword(Policy):
         if current_game_state.self_info.player_info["weapon2"] is not None:
             num_of_swords += 1
 
-        ret_val = num_of_swords == 2 or (num_of_swords == 1 and md is not None \
-                                         and utils.dist(md[0], md[1], current_game_state.self_info.x,
-                                                        current_game_state.self_info.y) > 1)
+        ret_val = num_of_swords == 2 or (num_of_swords == 1 and (md is None 
+                                        or utils.dist(md[0], md[1], current_game_state.self_info.x, 
+                                        current_game_state.self_info.y) > 1)
 
         print("AttackWithSword " + str(ret_val))
 
