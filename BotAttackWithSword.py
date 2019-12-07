@@ -7,14 +7,23 @@ import utils
 
 class BotAttackWithSword(Bot):
 
-    def __init__(self, pussyRating : int, priority_buildings = True):
+    def __init__(self, pussyRating: int, priority_buildings: bool = True, should_use_ultra_aggressive: bool = False):
         super().__init__()
         self.bot_walker = BotWalker()
         self.priority_buildings = priority_buildings
         self.pussyRating = pussyRating
+        self.should_use_ultra_aggressive = should_use_ultra_aggressive
 
     def play_single_turn(self, current_game_state: GameState):
-        if not self.priority_buildings or len(current_game_state.other_info.player_info["buildings"]) == 0:
+        touching = utils.dist(current_game_state.self_info.x, current_game_state.self_info.y,
+                              current_game_state.other_info.x, current_game_state.other_info.y)
+        has_sword = current_game_state.self_info.player_info["weapon1"] is not None \
+                    or current_game_state.self_info.player_info["weapon1"] is not None
+        ultra_aggressive = touching and has_sword and \
+                          current_game_state.self_info.player_info["health"] >= \
+                          current_game_state.other_info.player_info["health"]
+        if (self.should_use_ultra_aggressive and ultra_aggressive) or not self.priority_buildings or \
+                len(current_game_state.other_info.player_info["buildings"]) == 0:
             target = current_game_state.other_info.x, current_game_state.other_info.y
         else:
             swords = []
@@ -23,19 +32,28 @@ class BotAttackWithSword(Bot):
             shields = []
             houses = []
             for building in current_game_state.other_info.player_info["buildings"]:
-                if building["itemType"] == "SWORD_FORTRESS": swords.append(building)
-                elif building["itemType"] == "FORTRESS": forts.append(building)
-                elif building["itemType"] == "ARROW_FORTRESS": arrows.append(building)
-                elif building["itemType"] == "SHIELD_FORTRESS": shields.append(building)
-                elif building["itemType"] == "HOUSE": houses.append(building)
-            
-            if len(swords) > 0: target_list = swords
-            elif len(forts): target_list = forts
-            elif len(arrows): target_list = arrows
-            elif len(shields): target_list = shields
-            elif len(houses): target_list = houses
+                if building["itemType"] == "SWORD_FORTRESS":
+                    swords.append(building)
+                elif building["itemType"] == "FORTRESS":
+                    forts.append(building)
+                elif building["itemType"] == "ARROW_FORTRESS":
+                    arrows.append(building)
+                elif building["itemType"] == "SHIELD_FORTRESS":
+                    shields.append(building)
+                elif building["itemType"] == "HOUSE":
+                    houses.append(building)
+
+            if len(swords) > 0:
+                target_list = swords
+            elif len(forts):
+                target_list = forts
+            elif len(arrows):
+                target_list = arrows
+            elif len(shields):
+                target_list = shields
+            elif len(houses):
+                target_list = houses
             target = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y), target_list)
-            
 
         if utils.dist(current_game_state.self_info.x, current_game_state.self_info.y, target[0], target[1]) == 1:
             current_game_state.state_of_mind["TieTurns"] = 0
@@ -54,7 +72,6 @@ class BotAttackWithSword(Bot):
                 res = current_game_state.other_info.player_info['resources']
                 current_game_state.state_of_mind["TieTurns"] = 0
                 current_game_state.state_of_mind["OpponentResources"] = sum([res['STONE'], res['WOOD'], res['METAL']])
-
 
             self.bot_walker.x_sel = target[0]
             self.bot_walker.y_sel = target[1]

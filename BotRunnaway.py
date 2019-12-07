@@ -4,15 +4,16 @@ from GameState import GameState
 import utils
 
 
-def field_available(x,y,currgs):
+def field_available(x, y, currgs):
     if (x < 0 or y < 0):
         return False
 
     for it in currgs.map.items:
-        if(it['x']==x and it['y']==y):
+        if (it['x'] == x and it['y'] == y):
             return False
 
     return True
+
 
 class BotRunnaway(Bot):
 
@@ -24,13 +25,13 @@ class BotRunnaway(Bot):
         x1 = current_game_state.self_info.player_info['x']
         y1 = current_game_state.self_info.player_info['y']
 
-        if(x1 - x2 < 0):
+        if (x1 - x2 < 0):
 
-            if(field_available(x1-1,y1,current_game_state)):
+            if (field_available(x1 - 1, y1, current_game_state)):
 
                 return actions['LEFT']
 
-            elif(field_available(x1,y1-1,current_game_state)):
+            elif (field_available(x1, y1 - 1, current_game_state)):
 
                 return actions['UP']
 
@@ -52,25 +53,24 @@ class BotRunnaway(Bot):
 
         if (y1 - y2 < 0):
 
-            if (field_available(x1, y1 -1, current_game_state)):
+            if (field_available(x1, y1 - 1, current_game_state)):
 
                 return actions['UP']
 
-            elif (field_available(x1-1, y1, current_game_state)):
+            elif (field_available(x1 - 1, y1, current_game_state)):
 
                 return actions['LEFT']
 
             else:
                 return actions['RIGHT']
 
-
         if (y2 - y1 < 0):
 
-            if (field_available(x1, y1+1, current_game_state)):
+            if (field_available(x1, y1 + 1, current_game_state)):
 
                 return actions['DOWN']
 
-            elif (field_available(x1-1, y1, current_game_state)):
+            elif (field_available(x1 - 1, y1, current_game_state)):
 
                 return actions['LEFT']
 
