@@ -15,3 +15,5 @@ class GameState(object):
         self.state_of_mind["TieTurns"] = 0
         self.state_of_mind["Peaceful"] = False
         self.state_of_mind["OpponentResources"] = 0
+        self.state_of_mind["LastMoveWasStupid"] = False
+        self.state_of_mind["AllSelfHealthDiff"] = 0

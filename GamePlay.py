@@ -10,6 +10,13 @@ def update_peaceful(current_game_state):
         if abs(current_res - current_game_state.state_of_mind["OpponentResources"]) > 0:
             current_game_state.state_of_mind["Peaceful"] = False
 
+        print("Peacefull mode: Health Diff: ", current_game_state.state_of_mind['AllSelfHealthDiff'])
+        print("Peacefull mode: Last was stupid: ", current_game_state.state_of_mind['LastMoveWasStupid'])
+
+        if not current_game_state.state_of_mind['LastMoveWasStupid'] and current_game_state.state_of_mind['AllSelfHealthDiff'] < 0:
+            current_game_state.state_of_mind["Peaceful"] = False
+
+
     return current_game_state.state_of_mind["Peaceful"]
 
 def default_state_of_mind():
@@ -44,6 +51,7 @@ class GamePlay(object):
             self.url, self.playerId, self.gameId, a))
         print('{0}/doAction?playerId={1}&gameId={2}&action={3}'.format(
             self.url, self.playerId, self.gameId, a))
+
         self.update_data(res)
         ss = self.current_game_state.self_info
         print("self player " + str(ss.x) + " " + str(ss.y))
@@ -61,11 +69,26 @@ class GamePlay(object):
 
         res = res['result']
 
+        prev_all_health = 0
+        prev_stupid_moves = 0
         prev_state_of_mind = default_state_of_mind()
         if self.current_game_state is not None:
             prev_state_of_mind = self.current_game_state.state_of_mind
+            prev_all_health = self.current_game_state.self_info.player_info['health'] \
+                              + sum(
+                [building['health'] for building in self.current_game_state.self_info.player_info['buildings']])
+            prev_stupid_moves = self.current_game_state.self_info.player_info['stupidMoves']
+
         self.current_game_state = GameState(res, self.gameId, self.playerId)
         self.current_game_state.state_of_mind = prev_state_of_mind
+
+        new_all_health = self.current_game_state.self_info.player_info['health'] \
+            + sum([building['health'] for building in self.current_game_state.self_info.player_info['buildings']])
+
+        next_stupid_moves = self.current_game_state.self_info.player_info['stupidMoves']
+
+        self.current_game_state.state_of_mind['AllSelfHealthDiff'] = new_all_health - prev_all_health
+        self.current_game_state.state_of_mind['LastMoveWasStupid'] = prev_stupid_moves != next_stupid_moves
 
     def connect(self):
         res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
