@@ -176,6 +176,13 @@ def find_nearest(pos: tuple, items: list):
     return min_dist_pos
 
 
+# ((WOOD)|(STONE)|(METAL))_SHOP
+# ((SWORD)|(ARROW)|(SHIELD))_TOWER
+def find_nearest_by_type(map: Map, pos: tuple, item: str):
+    items = [i for i in map.items if i['itemType'] == item]
+    return find_nearest(pos, items)
+
+
 # a matrix of size mapSize[0],mapSize[1], having tuple of (x,y) pairs as elements
 # which represent the position of the nearest item
 def nearest_to_map(mapSize: tuple, items: list):

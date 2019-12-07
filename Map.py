@@ -1,6 +1,3 @@
-import utils
-
-
 class Map(object):
     def __init__(self, res):
         res = res['map']
@@ -23,9 +20,3 @@ class Map(object):
                         self.metal_shops += [(i, j)]
                     elif item['itemType'] == 'STONE_SHOP':
                         self.stone_shops += [(i, j)]
-
-    # ((WOOD)|(STONE)|(METAL))_SHOP
-    # ((SWORD)|(ARROW)|(SHIELD))_TOWER
-    def find_nearest(self, pos: tuple, item: str):
-        items = [i for i in self.items if i['itemType'] == item]
-        return utils.find_nearest(pos, items)

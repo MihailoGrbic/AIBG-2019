@@ -2,7 +2,9 @@ from Bot import Bot
 import GameState
 import utils
 from GameState import GameState
+from BotResourceGather import BotResourceGatherer
 import utils
+
 
 class Policy:
     def __init__(self, bot: Bot):
@@ -41,13 +43,13 @@ class BuildSwordFortress(Policy):
 class GetSword(Policy):
     def should_execute(self, current_game_state: GameState):
         md = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y),
-                        [b for b in current_game_state.self_info.player_info["buildings"] if
-                        b["itemType"] == "SWORD_FORTRESS" and b["id"] == current_game_state.playerId])
+                                [b for b in current_game_state.self_info.player_info["buildings"] if
+                                 b["itemType"] == "SWORD_FORTRESS" and b["id"] == current_game_state.playerId])
 
         return sword_fortress_exists(current_game_state) \
-                and ((current_game_state.self_info.player_info["weapon1"] is None \
-                and current_game_state.self_info.player_info["weapon2"] is None) \
-                or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
+               and ((current_game_state.self_info.player_info["weapon1"] is None \
+                     and current_game_state.self_info.player_info["weapon2"] is None) \
+                    or utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1)
 
 
 class AttackWithSword(Policy):
@@ -62,8 +64,20 @@ class Random(Policy):
 
 
 class GetReadyForBattle(Policy):
-    def should_execute(self, current_game_state : GameState):
+    def should_execute(self, current_game_state: GameState):
         return current_game_state.self_info.player_info["weapon1"] is not None \
-                and current_game_state.self_info.player_info["weapon2"] is not None \
-                and utils.dist(current_game_state.self_info.player_info['x'],current_game_state.self_info.player_info['y'],
-                               current_game_state.other_info.player_info['x'],current_game_state.other_info.player_info['y'])==2
+               and current_game_state.self_info.player_info["weapon2"] is not None \
+               and utils.dist(current_game_state.self_info.player_info['x'],
+                              current_game_state.self_info.player_info['y'],
+                              current_game_state.other_info.player_info['x'],
+                              current_game_state.other_info.player_info['y']) == 2
+
+
+class GatherResource(Policy):
+    def __init__(self, resource: str, amount: int = 3):
+        super().__init__(BotResourceGatherer(resource))
+        self.resource = resource
+        self.amount = amount
+
+    def should_execute(self, current_game_state: GameState):
+        return current_game_state.self_info.player_info["resources"][self.resource] < self.amount
