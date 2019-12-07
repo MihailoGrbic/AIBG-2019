@@ -5,12 +5,11 @@ from PlayerInfo import PlayerInfo
 
 class BotWalker(Bot):
 
-    x_sel = -1
-    y_sel = -1
+    def __init__(self, url, gameId, playerId, random=False, x=-1, y=-1):
+        super().__init__(url, gameId, playerId, random)
+        self.x_sel = x
+        self.y_sel = y
 
     def play_single_turn(self, current_game_state, current_map, self_info: PlayerInfo, other_info: PlayerInfo):
-        if self.x_sel == -1 or self.y_sel == -1 or (self.x_sel == self_info.x and self.y_sel == self_info.y) :
-            self.x_sel = int(input("next x: "))
-            self.y_sel = int(input("next y: "))
         path = utils.find_path_to(self_info, current_map, self.x_sel, self.y_sel)
         self.doAction(path[0])
