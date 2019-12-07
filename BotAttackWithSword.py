@@ -16,12 +16,13 @@ class BotAttackWithSword(Bot):
 
     def play_single_turn(self, current_game_state: GameState):
         touching = utils.dist(current_game_state.self_info.x, current_game_state.self_info.y,
-                              current_game_state.other_info.x, current_game_state.other_info.y)
+                              current_game_state.other_info.x, current_game_state.other_info.y) == 1
         has_sword = current_game_state.self_info.player_info["weapon1"] is not None \
                     or current_game_state.self_info.player_info["weapon1"] is not None
         ultra_aggressive = touching and has_sword and \
                           current_game_state.self_info.player_info["health"] >= \
                           current_game_state.other_info.player_info["health"]
+
         if (self.should_use_ultra_aggressive and ultra_aggressive) or not self.priority_buildings or \
                 len(current_game_state.other_info.player_info["buildings"]) == 0:
             target = current_game_state.other_info.x, current_game_state.other_info.y

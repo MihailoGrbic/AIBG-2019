@@ -148,7 +148,7 @@ class GatherResource(Policy):
 
 class PolicyPussy(Policy):
 
-    def __init__(self, bot: Bot,hp_run,dist_run):
+    def __init__(self, bot: Bot, hp_run, dist_run):
         super().__init__(BotRunnaway())
         self.hp_run = hp_run
         self.dist_run = dist_run

@@ -9,7 +9,7 @@ gameId = 0
 playerOne = 0
 playerTwo = 1
 
-gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerTwo, BotBuildSwordAndAttackStupidEnemy(50))
+gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerTwo, BotBuildSwordAndAttack(40))
 
 gamePlay.play()
 
