@@ -12,13 +12,12 @@ import utils
 
 class BotBuildSwordAndAttack(Bot):
 
-    def __init__(self, pussyRating : int):
+    def __init__(self):
         self.x = BotBuild()
-        self.pussyRating = pussyRating
 
     def get_policy_list(self):
         return [
-            Policy.AttackWithSword(BotAttackWithSword(self.pussyRating, priority_buildings=True, should_use_ultra_aggressive=True)),
+            Policy.AttackWithSword(BotAttackWithSword(priority_buildings=True)),
             Policy.GetSword(BotGetWeapon()),
             # Policy.BuildSwordFortress(self.x),
             BotBuilder.StarterPolicy(),
