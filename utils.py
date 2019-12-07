@@ -8,9 +8,9 @@ def dist(x1, y1, x2, y2):
     return abs(x1 - x2) + abs(y1 - y2)
 
 
-def move_available(current_map: Map, othe_player: PlayerInfo, x, y):
+def move_available(current_map: Map, other_player: PlayerInfo, x, y):
     return 0 <= x < current_map.width and 0 <= y < current_map.height and current_map.tiles[y][x]['item'] is None \
-           and (othe_player.x != x or othe_player.y != y)
+           and (other_player.x != x or other_player.y != y)
 
 
 class Node():
@@ -108,7 +108,7 @@ def astar(maze: Map, other_player: PlayerInfo, start, end):
             open_list.append(child)
 
 
-def find_path_to(player: PlayerInfo, current_map: Map, other_info: PlayerInfo, x, y):
+def find_path_to(player: PlayerInfo, other_info: PlayerInfo, current_map: Map, x, y):
     path = astar(current_map, other_info, (player.x, player.y), (x, y))
     path_wasd = []
     for i in range(len(path) - 1):

@@ -33,7 +33,7 @@ class StarterPolicy(Policy):
     def should_execute(self, current_game_state: GameState):
         return "SWORD_FORTRESS" not in [item["itemType"] for item in
                                         current_game_state.self_info.player_info["notFinishedBuildings"] +
-                                        current_game_state.self_info["buildings"]]
+                                        current_game_state.self_info.player_info["buildings"]]
 
 
 class BuildSwordFort(Policy):
