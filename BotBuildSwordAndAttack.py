@@ -16,9 +16,9 @@ class BotBuildSwordAndAttack(Bot):
 
     def get_policy_list(self):
         return [
-            Policy.BuildSwordFortress(self.x),
-            Policy.GetSword(BotGetWeapon()),
             Policy.AttackWithSword(BotAttackWithSword()),
+            Policy.GetSword(BotGetWeapon()),
+            Policy.BuildSwordFortress(self.x),
             Policy.Random(BotRandom())
         ]
 
