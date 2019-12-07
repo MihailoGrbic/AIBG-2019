@@ -16,6 +16,7 @@ actions = {
 
     # taking resources
 
+    "TAKE_": "tr",
     "TAKE_DOWN": "trs",
     "TAKE_UP": "trw",
     "TAKE_LEFT": "tra",
@@ -23,12 +24,14 @@ actions = {
 
     # leave resource
 
+    "LEAVE_": "l",
     "LEAVE_WOOD": "lw",
-    "LEAVE_STONE": "lw",
-    "LEAVE_METAL": "lw",
+    "LEAVE_STONE": "ls",
+    "LEAVE_METAL": "lm",
 
     # sword attack
 
+    "SWORD_": "sa",
     "SWORD_DOWN": "sas",
     "SWORD_UP": "saw",
     "SWORD_LEFT": "saa",
@@ -36,6 +39,7 @@ actions = {
 
     # arrow attack
 
+    "ARROW_": "aa",
     "ARROW_DOWN": "aas",
     "ARROW_UP": "aaw",
     "ARROW_LEFT": "aaa",
@@ -43,6 +47,7 @@ actions = {
 
     # house
 
+    "HOUSE_": "bh",
     "HOUSE_DOWN": "bhs",
     "HOUSE_UP": "bhw",
     "HOUSE_LEFT": "bha",
@@ -50,6 +55,7 @@ actions = {
 
     # fort
 
+    "FORT_": "bf",
     "FORT_DOWN": "bfs",
     "FORT_UP": "bfw",
     "FORT_LEFT": "bfa",
@@ -57,6 +63,7 @@ actions = {
 
     # shield fort
 
+    "SHIELD_FORT_": "bshf",
     "SHIELD_FORT_DOWN": "bshfs",
     "SHIELD_FORT_UP": "bshfw",
     "SHIELD_FORT_LEFT": "bshfa",
@@ -64,6 +71,7 @@ actions = {
 
     # sword fort
 
+    "SWORD_FORT_": "bsf",
     "SWORD_FORT_DOWN": "bsfs",
     "SWORD_FORT_UP": "bsfw",
     "SWORD_FORT_LEFT": "bsfa",
@@ -71,6 +79,7 @@ actions = {
 
     # arrow fort
 
+    "ARROW_FORT_": "baf",
     "ARROW_FORT_DOWN": "bafs",
     "ARROW_FORT_UP": "bafw",
     "ARROW_FORT_LEFT": "bafa",
@@ -82,6 +91,7 @@ actions = {
 
     # pick up your weapons and fight
 
+    "TAKE_WEAPON_": "tw",
     "TAKE_WEAPON_DOWN": "tws",
     "TAKE_WEAPON_UP": "tww",
     "TAKE_WEAPON_LEFT": "twa",
@@ -91,5 +101,14 @@ actions = {
 
 class Bot(object):
 
-    def play_single_turn(self, current_game_state : GameState):
+    def play_single_turn(self, current_game_state: GameState):
         pass
+
+    def get_policy_list(self):
+        return list()
+
+    def get_child_bot(self, current_game_state: GameState):
+        for policy in self.get_policy_list():
+            if policy.should_execute(current_game_state):
+                return policy.bot
+        return None
