@@ -56,7 +56,7 @@ class BotBuild(Bot):
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
             print("kurcina2")
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
@@ -65,7 +65,7 @@ class BotBuild(Bot):
             print(self.wood_pos)
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
             if self_info.player_info["resources"]["WOOD"] < 4:
-                self.doAction("tr" + path[0])
+                return "tr" + path[0]
             else:
                 self.state += 1
 
@@ -73,7 +73,7 @@ class BotBuild(Bot):
         if self.state == 4:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
@@ -81,30 +81,34 @@ class BotBuild(Bot):
         if self.state == 5:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
             if self_info.player_info["resources"]["STONE"] < 1:
-                self.doAction("tr" + path[0])
+                return "tr" + path[0]
             else:
                 self.state += 1
 
         # Goto house
         if self.state == 6:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            if len(path) == 0:
+                path2 = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
+                for i in ['w', 'a', 's', 'd']:
+                    if i != path2:
+                        return i
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
         # Build house
         if self.state == 7:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.doAction("bh" + path[0])
             self.state += 1
-            return
+            return "bh" + path[0]
 
         # Goto stone 2
         if self.state == 8:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
@@ -112,7 +116,7 @@ class BotBuild(Bot):
         if self.state == 9:
             path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
             if self_info.player_info["resources"]["STONE"] < 3:
-                self.doAction("tr" + path[0])
+                return "tr" + path[0]
             else:
                 self.state += 1
 
@@ -120,22 +124,21 @@ class BotBuild(Bot):
         if self.state == 10:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
         # Build fort
         if self.state == 11:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.doAction("bf" + path[0])
             self.state += 1
-            return
+            return "bf" + path[0]
 
         # Goto wood 2
         if self.state == 12:
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
@@ -143,7 +146,7 @@ class BotBuild(Bot):
         if self.state == 13:
             path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
             if self_info.player_info["resources"]["WOOD"] < 1:
-                self.doAction("tr" + path[0])
+                return "tr" + path[0]
             else:
                 self.state += 1
 
@@ -151,7 +154,7 @@ class BotBuild(Bot):
         if self.state == 14:
             path = find_path_to(self_info, current_map, self.metal_pos[0], self.metal_pos[1])
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
@@ -159,7 +162,7 @@ class BotBuild(Bot):
         if self.state == 15:
             path = find_path_to(self_info, current_map, self.metal_pos[0], self.metal_pos[1])
             if self_info.player_info["resources"]["METAL"] < 3:
-                self.doAction("tr" + path[0])
+                return "tr" + path[0]
             else:
                 self.state += 1
 
@@ -167,27 +170,23 @@ class BotBuild(Bot):
         if self.state == 16:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
             if len(path) > 1:
-                self.doAction(path[0])
+                return path[0]
             else:
                 self.state += 1
 
         # Upgrade fort
         if self.state == 17:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.doAction("bsf" + path[0])
             self.state += 1
-            return
+            return "bsf" + path[0]
 
         # Upgrade fort
         if self.state == 18:
             path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
-            self.doAction("bsf" + path[0])
             self.state += 1
             self.sword_fort_position = self.min_settle_pos
-
             self.state = 50
-            return
-
+            return "bsf" + path[0]
 
         # Try to build
         # print(current_map.tiles[self_info.x][self_info.y])

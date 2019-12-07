@@ -6,9 +6,8 @@ import utils
 
 class BotGetWeapon(Bot):
 
-    def __init__(self, url, gameId, playerId, random=False):
-        super().__init__(url, gameId, playerId, random)
-        self.bot_walker = BotWalker(self.url, self.gameId, self.playerId)
+    def __init__(self):
+        self.bot_walker = BotWalker()
 
     def play_single_turn(self, current_game_state: GameState):
         md = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y),

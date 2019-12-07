@@ -5,8 +5,7 @@ from PlayerInfo import PlayerInfo
 
 class BotWalker(Bot):
 
-    def __init__(self, url, gameId, playerId, random=False, x=-1, y=-1):
-        super().__init__(url, gameId, playerId, random)
+    def __init__(self, x=-1, y=-1):
         self.x_sel = x
         self.y_sel = y
 
