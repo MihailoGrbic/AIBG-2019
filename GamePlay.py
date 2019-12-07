@@ -12,6 +12,13 @@ def update_peaceful(current_game_state):
 
     return current_game_state.state_of_mind["Peaceful"]
 
+def default_state_of_mind():
+    return {
+        "Peaceful": False,
+        "TieTurns": 0,
+        "OpponentResources": 0
+    }
+
 
 class GamePlay(object):
     def __init__(self, url, gameId, playerId):
@@ -19,7 +26,7 @@ class GamePlay(object):
         self.gameId = gameId
 
         self.playerId = playerId
-        self.current_game_state = None
+        self.current_game_state: GameState = None
 
         self.connect()
 
@@ -44,6 +51,7 @@ class GamePlay(object):
     def play(self):
         while True:
             update_peaceful(self.current_game_state)
+            print(self.current_game_state.state_of_mind)
             action = self.get_child_bot().play_single_turn(self.current_game_state)
             self.doAction(action)
 
@@ -53,7 +61,11 @@ class GamePlay(object):
 
         res = res['result']
 
+        prev_state_of_mind = default_state_of_mind()
+        if self.current_game_state is not None:
+            prev_state_of_mind = self.current_game_state.state_of_mind
         self.current_game_state = GameState(res, self.gameId, self.playerId)
+        self.current_game_state.state_of_mind = prev_state_of_mind
 
     def connect(self):
         res = get(self.url + '/game/play?playerId=' + str(self.playerId) + '&gameId=' + str(self.gameId))
