@@ -13,11 +13,31 @@ class BotAttackWithSword(Bot):
         self.priority_buildings = priority_buildings
 
     def play_single_turn(self, current_game_state: GameState):
-        [b for b in current_game_state.other_info.player_info["buildings"] if
-                b["itemType"] == "SWORD_FORTRESS" and b["id"] == current_game_state.playerId]
+        if not self.priority_buildings or len(current_game_state.other_info.player_info["buildings"]) == 0:
+            target = current_game_state.other_info.x, current_game_state.other_info.y
+        else:
+            swords = []
+            forts = []
+            arrows = []
+            shields = []
+            houses = []
+            for building in current_game_state.other_info.player_info["buildings"]:
+                if building["itemType"] == "SWORD_FORTRESS": swords.append(building)
+                elif building["itemType"] == "FORTRESS": forts.append(building)
+                elif building["itemType"] == "ARROW_FORTRESS": arrows.append(building)
+                elif building["itemType"] == "SHIELD_FORTRESS": shields.append(building)
+                elif building["itemType"] == "HOUSE": houses.append(building)
+            
+            if len(swords) > 0: target_list = swords
+            elif len(forts): target_list = forts
+            elif len(arrows): target_list = arrows
+            elif len(shields): target_list = shields
+            elif len(houses): target_list = houses
+            target = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y), target_list)
+            
 
-        if utils.dist(current_game_state.self_info.x, current_game_state.self_info.y, current_game_state.other_info.x,
-                      current_game_state.other_info.y) == 1:
+        if utils.dist(current_game_state.self_info.x, current_game_state.self_info.y, target[0],
+                      target[1]) == 1:
             if current_game_state.other_info.x == current_game_state.self_info.x + 1:
                 return actions["SWORD_RIGHT"]
             if current_game_state.other_info.x == current_game_state.self_info.x - 1:
@@ -27,6 +47,6 @@ class BotAttackWithSword(Bot):
             if current_game_state.other_info.y == current_game_state.self_info.y - 1:
                 return actions["SWORD_UP"]
         else:
-            self.bot_walker.x_sel = current_game_state.other_info.x
-            self.bot_walker.y_sel = current_game_state.other_info.y
+            self.bot_walker.x_sel = target[0]
+            self.bot_walker.y_sel = target[1]
             return self.bot_walker.play_single_turn(current_game_state)
