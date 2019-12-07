@@ -74,8 +74,9 @@ class GetSword(Policy):
         if current_game_state.self_info.player_info["weapon2"] is not None:
             num_of_swords += 1
 
-        go_for_two_swords = two_swords_in <= utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) - 1 \
-            and num_of_swords == 0
+        go_for_two_swords = two_swords_in <= utils.dist(md[0], md[1], current_game_state.self_info.x,
+                                                        current_game_state.self_info.y) - 1 \
+                            and num_of_swords == 0
 
         take_one_sword = utils.dist(md[0], md[1], current_game_state.self_info.x, current_game_state.self_info.y) == 1 \
                          and one_sword_in == 0 \
@@ -95,6 +96,12 @@ class AttackWithSword(Policy):
         self.enable_peaceful = enable_peaceful
 
     def should_execute(self, current_game_state: GameState):
+
+        if not utils.can_move(current_game_state.map, current_game_state.other_info,
+                              (current_game_state.self_info.x, current_game_state.self_info.y)) \
+                and utils.dist(current_game_state.other_info.x, current_game_state.other_info.y,
+                               current_game_state.self_info.x, current_game_state.self_info.y) == 1:
+            return True
 
         if self.enable_peaceful and current_game_state.state_of_mind["Peaceful"]:
             return False
