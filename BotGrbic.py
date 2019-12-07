@@ -1,7 +1,8 @@
 import Bot
 from Bot import actions, Bot
+from InteligenceUtil import find_best_sword_settlement
 
-from utils import dist, find_path_to#, find_path_to_nearest
+from utils import *
 import random
 
 def is_empty(move, current_map, self_info):
@@ -28,79 +29,124 @@ def next_position(move, current_map, self_info):
         # if current_map.tiles[nx][ny]["item"] is not None and current_map.tiles[nx][ny].item
 
 class BotGrbic(Bot):
-
+    state = 1
+    
     def play_single_turn(self, current_game_state, current_map, self_info, other_info):
-        #print(current_map.items)
+        print(self.state)
+        # Survey the area
+        if self.state == 1:
+            self.min_settle_pos, self.wood_pos, self.metal_pos, self.stone_pos = find_best_sword_settlement((self_info.x, self_info.y), current_map)
+            self.min_settle_pos = (self.min_settle_pos[1], self.min_settle_pos[0])
+            self.wood_pos = (self.wood_pos[1], self.wood_pos[0])
+            self.stone_pos = (self.stone_pos[1], self.stone_pos[0])
+            self.metal_pos = (self.metal_pos[1], self.metal_pos[0])
 
+            self.state += 1
+
+        # Goto wood
+        if self.state == 2:
+            print("kurcina")
+            path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
+            print("kurcina2")
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
+                
         # Take wood
-        path = find_path_to_nearest(current_map, self_info, "Wood")
-        while len(path) > 1: 
-            path = find_path_to_nearest(current_map, self_info, "Wood")
-            self.doAction(path[0])
-        
-        self.doAction("tr" + path[0]), self.doAction("tr" + path[0]), self.doAction("tr" + path[0]), self.doAction("tr" + path[0])
+        if self.state == 3:
+            print(self.wood_pos)
+            path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
+            if self_info.player_info["resources"]["WOOD"] < 4: self.doAction("tr" + path[0])
+            else: self.state += 1
+                
+        # Goto stone
+        if self.state == 4:
+            path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1  
 
         # Take stone
-        path = find_path_to_nearest(current_map, self_info, "Stone")
-        while len(path) > 1: 
-            path = find_path_to_nearest(current_map, self_info, "Stone")
-            self.doAction(path[0])
-        self.doAction("tr" + path[-1])
-        stone_dir = path[-1]
+        if self.state == 5:
+            path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
+            if self_info.player_info["resources"]["STONE"] < 1: self.doAction("tr" + path[0])
+            else: self.state += 1
 
-        # Build house next to stone
-        path = find_path_to_nearest(current_map, self_info, "Metal")
-        potential_spots = ['w', 'a', 's', 'd']
-        
-        for spot in potential_spots:
-            if path[0] != spot:
-                if is_empty(spot, current_map, self_info):
-                   self.doAction("bh" + spot)
-                   house_spot = next_position(spot, current_map, self_info)
-                   break
+        # Goto house
+        if self.state == 6:
+            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
 
-        # Take stone and upgrade house to fortress
-        self.doAction("tr" + stone_dir), self.doAction("tr" + stone_dir), self.doAction("tr" + stone_dir)
-        self.doAction("bf" + spot)
-        
-        # Take metal and wood for sword fortress TODO Optimize this
-        while len(path) > 1: 
-            path = find_path_to_nearest(current_map, self_info, "Metal")
-            self.doAction(path[0])
-        self.doAction("tr" + path[-1]), self.doAction("tr" + path[-1]), self.doAction("tr" + path[-1])
+        # Build house
+        if self.state == 7:
+            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            self.doAction("bh" + path[0])
+            self.state += 1
+            return
 
-        path = find_path_to_nearest(current_map, self_info, "Wood")
-        while len(path) > 1: 
-            path = find_path_to_nearest(current_map, self_info, "Wood")
-            self.doAction(path[0])
-        self.doAction("tr" + path[-1]), self.doAction("bsf" + path[-1])
+        # Goto stone 2
+        if self.state == 8:
+            path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
 
-        # Build sword fortress
-        path = find_path_to(self_info, current_map, house_spot[0], house_spot[1])
-        while len(path) > 1: 
-            path = find_path_to(self_info, current_map, house_spot[0], house_spot[1])
-            self.doAction(path[0])
-        self.doAction("bsf" + path[-1])
+        # Take stone 2
+        if self.state == 9:
+            path = find_path_to(self_info, current_map, self.stone_pos[0], self.stone_pos[1])
+            if self_info.player_info["resources"]["STONE"] < 3: self.doAction("tr" + path[0])
+            else: self.state += 1
 
-        # Try to build 
-        print(current_map.tiles[self_info.x][self_info.y])
+        # Goto house
+        if self.state == 10:
+            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
 
-        # # Pickup the needed ammount
-        # for item in current_map.items:
-        #     if dist(item['x'], item['y'], self_info.x, self_info.y) == 1:
-        #         if item['itemType'] == 'WOOD_SHOP':
-        #             self.doAction(actions["UP"]), 
+        # Build fort
+        if self.state == 11:
+            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            self.doAction("bf" + path[0])
+            self.state += 1
+            return
+
+        # Goto wood 2
+        if self.state == 12:
+            path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
                 
+        # Take wood 2
+        if self.state == 13:
+            path = find_path_to(self_info, current_map, self.wood_pos[0], self.wood_pos[1])
+            if self_info.player_info["resources"]["WOOD"] < 2: self.doAction("tr" + path[0])
+            else: self.state += 1
 
-        # for i in range(len(path)): self.doAction(path[i])
+        # Goto metal
+        if self.state == 14:
+            path = find_path_to(self_info, current_map, self.metal_pos[0], self.metal_pos[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
 
+        # Take metal
+        if self.state == 15:
+            path = find_path_to(self_info, current_map, self.metal_pos[0], self.metal_pos[1])
+            if self_info.player_info["resources"]["METAL"] < 3: self.doAction("tr" + path[0])
+            else: self.state += 1
 
-        x = random.randint(0, 4)
-        if x == 0:
-            self.doAction(actions["UP"])
-        if x == 1:
-            self.doAction(actions["DOWN"])
-        if x == 2:
-            self.doAction(actions["LEFT"])
-        if x == 3:
-            self.doAction(actions["RIGHT"])
+        # Goto fort
+        if self.state == 16:
+            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            if len(path) > 1: self.doAction(path[0])
+            else: self.state += 1
+
+        # Upgrade fort
+        if self.state == 17:
+            path = find_path_to(self_info, current_map, self.min_settle_pos[0], self.min_settle_pos[1])
+            self.doAction("bsf" + path[0])
+            self.state += 1
+            return
+        
+        
+        if self.state == 18:
+            self.doAction("")
+        # Try to build 
+        # print(current_map.tiles[self_info.x][self_info.y])
