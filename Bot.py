@@ -92,7 +92,6 @@ actions = {
 class Bot(object):
     def __init__(self, url, gameId, playerId, random=False):
         self.url = url
-        # TODO (rosko): Ovo je suvisno?
         self.gameId = gameId
 
         self.playerId = playerId
