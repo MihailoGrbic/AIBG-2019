@@ -4,7 +4,7 @@ from BotBuilder import BotBuilder
 from BotBuildSwordAndAttack import BotBuildSwordAndAttack
 from Client import get
 
-gameId = 2
+gameId = 0
 playerOne = 0
 playerTwo = 1
 

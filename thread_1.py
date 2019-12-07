@@ -1,8 +1,10 @@
 from GamePlaySingleBot import GamePlaySingleBot
 from BotRandom import BotRandom
+from BotRandomize import BotRandomize
+from BotBuildSwordAndAttack import BotBuildSwordAndAttack
 from Client import get
 
-gameId = 2
+gameId = 0
 playerOne = 0
 playerTwo = 1
 
@@ -11,7 +13,7 @@ get("http://localhost:9080/admin/createGame?gameId=" + str(gameId) +
            "&playerTwo=" + str(playerTwo)  +
            "&mapName=mapConfig")
 
-gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerOne, BotRandom())
+gamePlay = GamePlaySingleBot('http://localhost:9080', gameId, playerOne, BotRandomize(BotBuildSwordAndAttack(), 0.2))
 
 gamePlay.play()
 
