@@ -36,8 +36,8 @@ class BotAttackWithSword(Bot):
             target = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y), target_list)
             
 
-        if utils.dist(current_game_state.self_info.x, current_game_state.self_info.y, target[0],
-                      target[1]) == 1:
+        if utils.dist(current_game_state.self_info.x, current_game_state.self_info.y, target[0], target[1]) == 1:
+            current_game_state.state_of_mind["TieTurns"] = 0
             if target[0] == current_game_state.self_info.x + 1:
                 return actions["SWORD_RIGHT"]
             if target[0] == current_game_state.self_info.x - 1:
@@ -47,6 +47,14 @@ class BotAttackWithSword(Bot):
             if target[1] == current_game_state.self_info.y - 1:
                 return actions["SWORD_UP"]
         else:
+            current_game_state.state_of_mind["TieTurns"] += 1
+            if current_game_state.state_of_mind["TieTurns"] == 100:
+                current_game_state.state_of_mind["Peaceful"] = True
+                res = current_game_state.other_info.player_info['resources']
+                current_game_state.state_of_mind["TieTurns"] = 0
+                current_game_state.state_of_mind["OpponentResources"] = sum([res['STONE'], res['WOOD'], res['METAL']])
+
+
             self.bot_walker.x_sel = target[0]
             self.bot_walker.y_sel = target[1]
             return self.bot_walker.play_single_turn(current_game_state)

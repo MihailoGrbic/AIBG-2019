@@ -45,14 +45,29 @@ def sword_fortress_exists(current_game_state):
     return len([b for b in current_game_state.self_info.player_info["buildings"] if b["itemType"] == "SWORD_FORTRESS"]) > 0
 
 
+def update_peaceful(current_game_state):
+    # Check if peaceful
+    if current_game_state.state_of_mind["Peaceful"] == True:
+        res = current_game_state.other_info.player_info['resources']
+        current_res = sum([res['STONE'], res['WOOD'], res['METAL']])
+        if abs(current_res - current_game_state.state_of_mind["OpponentResources"]) > 0:
+            current_game_state.state_of_mind["Peaceful"] = False
+
+    return current_game_state.state_of_mind["Peaceful"]
+
 class BuildSwordFortress(Policy):
     def should_execute(self, current_game_state: GameState):
+        update_peaceful(current_game_state)
+
         print("BuildSwordFortress " + str(not sword_fortress_exists(current_game_state)))
         return not sword_fortress_exists(current_game_state)
 
 
 class GetSword(Policy):
     def should_execute(self, current_game_state: GameState):
+
+        update_peaceful(current_game_state)
+
         md = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y),
                                 [b for b in current_game_state.self_info.player_info["buildings"] if
                                  b["itemType"] == "SWORD_FORTRESS"])
@@ -74,6 +89,10 @@ class GetSword(Policy):
 
 class AttackWithSword(Policy):
     def should_execute(self, current_game_state: GameState):
+
+        if update_peaceful(current_game_state):
+            return False
+
         md = utils.find_nearest((current_game_state.self_info.x, current_game_state.self_info.y),
                                 [b for b in current_game_state.self_info.player_info["buildings"] if
                                  b["itemType"] == "SWORD_FORTRESS"])
