@@ -5,22 +5,20 @@ from BotAttackWithSword import BotAttackWithSword
 from BotGetWeapon import BotGetWeapon
 from GameState import GameState
 from BotRandom import BotRandom
-import BotBuilder
 import Policy
 import utils
 
 
-class BotBuildSwordAndAttack(Bot):
+class BotBuildSwordAndAttackStupidEnemy(Bot):
 
     def __init__(self):
         self.x = BotBuild()
 
     def get_policy_list(self):
         return [
-            Policy.AttackWithSword(BotAttackWithSword(priority_buildings=True)),
+            Policy.AttackWithSword(BotAttackWithSword(False)),
             Policy.GetSword(BotGetWeapon()),
-            # Policy.BuildSwordFortress(self.x),
-            BotBuilder.StarterPolicy(),
+            Policy.BuildSwordFortress(self.x),
             Policy.PolicyAlwaysAllow(BotRandom())
         ]
 
