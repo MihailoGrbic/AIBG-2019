@@ -7,10 +7,11 @@ import utils
 
 class BotAttackWithSword(Bot):
 
-    def __init__(self, priority_buildings = True):
+    def __init__(self, pussyRating : int, priority_buildings = True):
         super().__init__()
         self.bot_walker = BotWalker()
         self.priority_buildings = priority_buildings
+        self.pussyRating = pussyRating
 
     def play_single_turn(self, current_game_state: GameState):
         if not self.priority_buildings or len(current_game_state.other_info.player_info["buildings"]) == 0:
@@ -48,7 +49,7 @@ class BotAttackWithSword(Bot):
                 return actions["SWORD_UP"]
         else:
             current_game_state.state_of_mind["TieTurns"] += 1
-            if current_game_state.state_of_mind["TieTurns"] == 100:
+            if current_game_state.state_of_mind["TieTurns"] == self.pussyRating:
                 current_game_state.state_of_mind["Peaceful"] = True
                 res = current_game_state.other_info.player_info['resources']
                 current_game_state.state_of_mind["TieTurns"] = 0
