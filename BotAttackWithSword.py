@@ -38,13 +38,13 @@ class BotAttackWithSword(Bot):
 
         if utils.dist(current_game_state.self_info.x, current_game_state.self_info.y, target[0],
                       target[1]) == 1:
-            if current_game_state.other_info.x == current_game_state.self_info.x + 1:
+            if target[0] == current_game_state.self_info.x + 1:
                 return actions["SWORD_RIGHT"]
-            if current_game_state.other_info.x == current_game_state.self_info.x - 1:
+            if target[0] == current_game_state.self_info.x - 1:
                 return actions["SWORD_LEFT"]
-            if current_game_state.other_info.y == current_game_state.self_info.y + 1:
+            if target[1] == current_game_state.self_info.y + 1:
                 return actions["SWORD_DOWN"]
-            if current_game_state.other_info.y == current_game_state.self_info.y - 1:
+            if target[1] == current_game_state.self_info.y - 1:
                 return actions["SWORD_UP"]
         else:
             self.bot_walker.x_sel = target[0]
