@@ -16,7 +16,7 @@ class BotConstructor(Bot):
     def play_single_turn(self, current_game_state: GameState):
         cur_pos = (current_game_state.self_info.x, current_game_state.self_info.y)
         if self.build_type == "HOUSE":
-            for diff in [(-1, 0, 'a'), (1, 0, 'd'), (0, -1, 's'), (0, -1, 'w')]:
+            for diff in [(-1, 0, 'a'), (1, 0, 'd'), (0, -1, 's'), (0, 1, 'w')]:
                 if utils.move_available(current_game_state.map, current_game_state.other_info, cur_pos[0] + diff[0],
                                         cur_pos[1] + diff[1]):
                     return actions["HOUSE_"] + diff[2]

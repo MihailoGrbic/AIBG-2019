@@ -118,6 +118,8 @@ def astar(maze: Map, other_player: PlayerInfo, start, end):
 def find_path_to(player: PlayerInfo, other_info: PlayerInfo, current_map: Map, x, y):
     path = astar(current_map, other_info, (player.x, player.y), (x, y))
     path_wasd = []
+    if path is None:
+        return None
     for i in range(len(path) - 1):
         diff = (path[i + 1][0] - path[i][0], path[i + 1][1] - path[i][1])
         if diff[1] == -1:
