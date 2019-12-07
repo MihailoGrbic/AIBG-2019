@@ -139,6 +139,17 @@ def find_resource_locations(current_map: Map, resource_type):
     return coors
 
 
+def direction(pos1: tuple, pos2: tuple) -> str:
+    if pos1[1] == pos2[1] - 1:
+        return 'w'
+    if pos1[0] == pos2[0] - 1:
+        return 'a'
+    if pos1[1] == pos2[1] + 1:
+        return 's'
+    if pos1[0] == pos2[0] + 1:
+        return 'd'
+
+
 def find_path_to_nearest(current_map: Map, player: PlayerInfo, resource_type):
     min_len = 10000000
     pathoske = None
