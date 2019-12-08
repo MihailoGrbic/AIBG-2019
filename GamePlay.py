@@ -61,7 +61,10 @@ class GamePlay(object):
             update_peaceful(self.current_game_state)
             print(self.current_game_state.state_of_mind)
             action = self.get_child_bot().play_single_turn(self.current_game_state)
-            self.doAction(action)
+            if action is not None:
+                self.doAction(action)
+            else:
+                self.doAction("None")
 
     def update_data(self, res):
         if not res['success']:
