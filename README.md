@@ -1,1 +1,1 @@
-# Artificial_Intelligence_Battleground_2019
+# Artificial Intelligence Battleground 2019
